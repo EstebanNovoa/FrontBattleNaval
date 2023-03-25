@@ -25,11 +25,12 @@ public class Cell extends Observable{
     private JPanel panel; 
     
 
-    public Cell(String name,CellManager observer, BoardManager boardManager) {
+    public Cell(String name, BoardManager boardManager,BoatTable boatTable) {
         super();
         panel = new JPanel();
-        this.addObserver(observer);
+        this.addObserver(CellManager.getMyCellManager());
         this.addObserver(boardManager);
+        this.addObserver(boatTable);
         mouseActions(panel);
         setProperties(name);
     }
@@ -60,7 +61,7 @@ public class Cell extends Observable{
     
     
     public void mouseActions(JPanel panel) {
-        panel.addMouseListener(new MouseAdapter() {
+        panel.addMouseListener( new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
                 panel.setBackground(Color.GREEN);
@@ -69,18 +70,27 @@ public class Cell extends Observable{
 
             @Override
             public void mouseExited(MouseEvent e) {
-                if (permanent== false) {
-                     panel.setBackground(Color.LIGHT_GRAY);
+                if (permanent == false) {
+                    panel.setBackground(Color.LIGHT_GRAY);
                 }
-               
+
             }
-            
+
             @Override
-            public void mouseClicked(MouseEvent e){
+            public void mouseClicked(MouseEvent e) {
                 setChanged();
                 notifyObservers(Cell.this);
+                
             }
-        });
+        }
+    
+
+    );
+    }
+    
+    public void notiAll(){
+        setChanged();
+        notifyObservers(Cell.this);
     }
 
     public JPanel getPanel() {

@@ -8,6 +8,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
@@ -15,21 +17,27 @@ import javax.swing.JPanel;
  *
  * @author novoa
  */
-public class BoatTable extends javax.swing.JFrame {
+public class BoatTable extends javax.swing.JFrame implements Observer{
 
     /**
      * Creates new form BoatTable
      */
     
-    private CellManager cellList;
-    public static final int BoardWidth = 8;
+    public static final int BoardWidth = 10;
     private BoardManager boardManager;
     
     public BoatTable(BoardManager boardManager) {
         initComponents();
-        cellList = new CellManager();
         mainBoard.setLayout(new GridLayout(BoardWidth,BoardWidth));
         this.boardManager = boardManager;
+        btnAddBoat4Size.addMouseListener(Mouse.getMyMouse());
+        btnAddBoat3Size.addMouseListener(Mouse.getMyMouse());
+        btnAddBoat2Size.addMouseListener(Mouse.getMyMouse());
+        btnAddBoat1Size.addMouseListener(Mouse.getMyMouse());
+        btnAddBoat4Size.setName("btnAddBoat4Size");
+        btnAddBoat3Size.setName("btnAddBoat3Size");
+        btnAddBoat2Size.setName("btnAddBoat2Size");
+        btnAddBoat1Size.setName("btnAddBoat1Size");
         fillMainBoardStart();
         
     }
@@ -43,9 +51,21 @@ public class BoatTable extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jProgressBar1 = new javax.swing.JProgressBar();
         backgroundPanel = new javax.swing.JPanel();
         text = new javax.swing.JLabel();
         mainBoard = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
+        btnAddBoat4Size = new javax.swing.JButton();
+        btnAddBoat3Size = new javax.swing.JButton();
+        btnAddBoat1Size = new javax.swing.JButton();
+        btnAddBoat2Size = new javax.swing.JButton();
+        lblNumberBoat2Size = new javax.swing.JLabel();
+        lblNumberBoat4Size = new javax.swing.JLabel();
+        lblNumberBoat3Size = new javax.swing.JLabel();
+        lblNumberBoat1Size = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -66,15 +86,117 @@ public class BoatTable extends javax.swing.JFrame {
         mainBoard.setLayout(new java.awt.GridLayout());
         backgroundPanel.add(mainBoard);
 
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+
+        btnAddBoat4Size.setText("Barco : 4");
+        btnAddBoat4Size.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddBoat4SizeActionPerformed(evt);
+            }
+        });
+
+        btnAddBoat3Size.setText("Barco: 3");
+        btnAddBoat3Size.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddBoat3SizeActionPerformed(evt);
+            }
+        });
+
+        btnAddBoat1Size.setText("Barco: 1");
+        btnAddBoat1Size.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddBoat1SizeActionPerformed(evt);
+            }
+        });
+
+        btnAddBoat2Size.setText("Barco: 2");
+        btnAddBoat2Size.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddBoat2SizeActionPerformed(evt);
+            }
+        });
+
+        lblNumberBoat2Size.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblNumberBoat2Size.setText("3");
+
+        lblNumberBoat4Size.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblNumberBoat4Size.setText("3");
+
+        lblNumberBoat3Size.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblNumberBoat3Size.setText("3");
+
+        lblNumberBoat1Size.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblNumberBoat1Size.setText("2");
+
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
+        jLabel5.setText("Barcos Restantes");
+
+        jLabel6.setText("Barcos Disponibles");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnAddBoat2Size)
+                    .addComponent(btnAddBoat1Size)
+                    .addComponent(btnAddBoat3Size)
+                    .addComponent(btnAddBoat4Size))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblNumberBoat2Size, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblNumberBoat1Size, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblNumberBoat4Size, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblNumberBoat3Size, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(15, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addGap(36, 36, 36))))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(11, 11, 11)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAddBoat4Size)
+                    .addComponent(lblNumberBoat4Size, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(29, 29, 29)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAddBoat3Size)
+                    .addComponent(lblNumberBoat3Size, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(26, 26, 26)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblNumberBoat2Size, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAddBoat2Size))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblNumberBoat1Size, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAddBoat1Size))
+                .addContainerGap(32, Short.MAX_VALUE))
+        );
+
+        backgroundPanel.add(jPanel1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(backgroundPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 705, Short.MAX_VALUE)
+            .addComponent(backgroundPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 673, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(backgroundPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 549, Short.MAX_VALUE)
+            .addComponent(backgroundPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 592, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -83,6 +205,22 @@ public class BoatTable extends javax.swing.JFrame {
     private void textMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textMouseMoved
         // TODO add your handling code here:
     }//GEN-LAST:event_textMouseMoved
+
+    private void btnAddBoat4SizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddBoat4SizeActionPerformed
+            
+    }//GEN-LAST:event_btnAddBoat4SizeActionPerformed
+
+    private void btnAddBoat3SizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddBoat3SizeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAddBoat3SizeActionPerformed
+
+    private void btnAddBoat1SizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddBoat1SizeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAddBoat1SizeActionPerformed
+
+    private void btnAddBoat2SizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddBoat2SizeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAddBoat2SizeActionPerformed
 
     public JPanel getMainBoard() {
         return mainBoard;
@@ -96,11 +234,13 @@ public class BoatTable extends javax.swing.JFrame {
         mainBoard.setLocation((backgroundPanel.getWidth()/2)-(backgroundPanel.getWidth()/2), (backgroundPanel.getHeight()/2)-(backgroundPanel.getHeight()/2));
         for (int i = 1; i <= BoardWidth; i++) {
             for (int j = 1; j <= BoardWidth; j++) {
-                Cell currentPanel = new Cell((j + "," + i),cellList,boardManager);
-                cellList.getCellList().add(currentPanel);
+                Cell currentPanel = new Cell((j + "," + i),boardManager,this);
+                CellManager.getMyCellManager().getCellList().add(currentPanel);
                 mainBoard.add(currentPanel.getPanel());
             }
         }
+
+
     }
     
     
@@ -110,8 +250,8 @@ public class BoatTable extends javax.swing.JFrame {
         mainBoard.revalidate();
         for (int i = 1; i <= BoardWidth; i++) {
             for (int j = 1; j <= BoardWidth; j++) {
-                Cell currentPanel = cellList.search(i, j);
-                cellList.getCellList().add(currentPanel);
+                Cell currentPanel = CellManager.getMyCellManager().search(i, j);
+                CellManager.getMyCellManager().getCellList().add(currentPanel);
                 mainBoard.add(currentPanel.getPanel());
             }
         }
@@ -157,7 +297,68 @@ public class BoatTable extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel backgroundPanel;
+    private javax.swing.JButton btnAddBoat1Size;
+    private javax.swing.JButton btnAddBoat2Size;
+    private javax.swing.JButton btnAddBoat3Size;
+    private javax.swing.JButton btnAddBoat4Size;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JProgressBar jProgressBar1;
+    private javax.swing.JLabel lblNumberBoat1Size;
+    private javax.swing.JLabel lblNumberBoat2Size;
+    private javax.swing.JLabel lblNumberBoat3Size;
+    private javax.swing.JLabel lblNumberBoat4Size;
     private javax.swing.JPanel mainBoard;
     private javax.swing.JLabel text;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void update(Observable currentPanel, Object arg) {
+        try {
+            if (currentPanel instanceof Cell) {
+                switch (Mouse.getMyMouse().getComponentClicked().getName()) {
+                    case "btnAddBoat4Size":
+                        int numberBoats4 = Integer.valueOf(lblNumberBoat4Size.getText()) - 1;
+                        if (numberBoats4 >= 0) {
+                            lblNumberBoat4Size.setText(Integer.toString(numberBoats4));                        
+                        }else{
+                            CellManager.getMyCellManager().setBoatAvaliable4(false);
+                        }
+                        break;
+                    case "btnAddBoat3Size":
+                        int numberBoats3 = Integer.valueOf(lblNumberBoat3Size.getText()) - 1;
+                        if (numberBoats3 >= 0) {
+                            lblNumberBoat3Size.setText(Integer.toString(numberBoats3));                        
+                        }else{
+                            CellManager.getMyCellManager().setBoatAvaliable3(false);
+                        }
+                        break;
+                    case "btnAddBoat2Size":
+                        int numberBoats2 = Integer.valueOf(lblNumberBoat2Size.getText()) - 1;
+                        if (numberBoats2 >= 0) {
+                            lblNumberBoat2Size.setText(Integer.toString(numberBoats2));                        
+                        }else{
+                            CellManager.getMyCellManager().setBoatAvaliable2(false);
+                        }
+                        break;
+                    case "btnAddBoat1Size":
+                        int numberBoats1 = Integer.valueOf(lblNumberBoat1Size.getText()) - 1;
+                        if (numberBoats1 >= 0) {
+                            lblNumberBoat1Size.setText(Integer.toString(numberBoats1));                        
+                        }else{
+                            CellManager.getMyCellManager().setBoatAvaliable1(false);
+                        }
+                        break;
+
+
+                    default:
+                        throw new AssertionError();
+                }
+
+            }
+        } catch (Exception e) {
+        }
+    }
+
 }
