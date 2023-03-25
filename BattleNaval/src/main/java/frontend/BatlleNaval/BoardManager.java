@@ -4,6 +4,8 @@
  */
 package frontend.BatlleNaval;
 
+import frontend.BatlleNaval.login.FrameLogin;
+
 import java.util.Observable;
 import java.util.Observer;
 
@@ -12,16 +14,16 @@ import java.util.Observer;
  * @author novoa
  */
 public class BoardManager implements Observer{
-    
+
     private BoatTable boatTable;
 
     public BoardManager() {
         boatTable = new BoatTable(this);
         boatTable.setVisible(true);
     }
-    
-    
- 
+
+
+
 
     @Override
     public void update(Observable o, Object arg) {
@@ -30,13 +32,10 @@ public class BoardManager implements Observer{
         }
 
     }
-    
-    
-    public static void main(String[] args) {
-        new BoardManager();
-        
-    }
-    
-    
-    
+
+
+
+
+
+
 }
