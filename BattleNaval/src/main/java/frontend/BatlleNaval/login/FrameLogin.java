@@ -16,8 +16,7 @@ public class FrameLogin extends JFrame implements Texts {
     private JLabel labelName;
     private JTextField fieldGetName;
     private JButton btnAcceptLogin;
-    private JComboBox<String> selectDifficulty;
-    private JLabel labelDifficulty;
+
     private JLabel labelImage;
     private JDialog dialogWaitMatch;
 
@@ -39,12 +38,12 @@ public class FrameLogin extends JFrame implements Texts {
         this.btnAcceptLogin = new JButton(BTN_LOGIN);
         this.btnAcceptLogin.addActionListener(this.actionListener);
         this.btnAcceptLogin.setActionCommand(Actions.BTN_ACCEPT_LOGIN);
-//        ImageIcon imageIcon = new ImageIcon(getClass().getResource("/img/GameIcon.jpg"));
-//        this.labelImage = new JLabel(imageIcon);
-//        this.labelImage.setIcon(new ImageIcon(imageIcon.getImage().getScaledInstance(250, 250, Image.SCALE_DEFAULT)));
+        System.out.println(getClass().getResource("frontend/BatlleNaval/login/GameIcon.jpg"));
+        ImageIcon imageIcon = new ImageIcon("frontend/BatlleNaval/login/GameIcon.jpg");
+        this.labelImage = new JLabel(imageIcon);
+        this.labelImage.setIcon(new ImageIcon(imageIcon.getImage().getScaledInstance(250, 250, Image.SCALE_DEFAULT)));
         this.labelImage.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
         labelImage.setSize(10, 10);
-        labelDifficulty.setHorizontalAlignment(SwingConstants.CENTER);
         this.dialogWaitMatch = new JDialog(this, "", true);
         dialogWaitMatch.setLayout(new GridLayout(1, 1, 10, 10));
         JLabel labelWaitMatch = new JLabel(WAIT_MATCH);
@@ -68,11 +67,6 @@ public class FrameLogin extends JFrame implements Texts {
         add(this.labelName);
         this.fieldGetName.setBounds(260, 40, 270, 30);
         add(this.fieldGetName);
-        this.labelDifficulty.setBounds(260, 75, 270, 30);
-        this.labelDifficulty.setFont(font);
-        add(this.labelDifficulty);
-        this.selectDifficulty.setBounds(260, 110, 270, 30);
-        add(this.selectDifficulty);
         this.btnAcceptLogin.setBounds(260, 205, 270, 50);
         add(this.btnAcceptLogin);
     }
