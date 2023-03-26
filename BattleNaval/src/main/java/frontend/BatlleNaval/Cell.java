@@ -20,7 +20,7 @@ import javax.swing.JPanel;
 public class Cell extends Observable{
     
     
-    private boolean status;
+    private Status status;
     private boolean  permanent = false;
     private JPanel panel; 
     
@@ -34,6 +34,22 @@ public class Cell extends Observable{
         mouseActions(panel);
         setProperties(name);
     }
+
+    public Cell(String name) {
+        panel = new JPanel();
+        setProperties(name);
+    }
+    
+    
+
+    public Status isStatus() {
+        return status;
+    }
+
+    public boolean isPermanent() {
+        return permanent;
+    }
+    
     
     private void setProperties(String name){
         panel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
@@ -48,16 +64,16 @@ public class Cell extends Observable{
 
     public void setPermanent(boolean permanent) {
         this.permanent = permanent;
+        this.status = Status.CB;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
     
-    public void setStatus(boolean status) {
-        status = false;
-        if (status == false) {
-            panel.setBackground(Color.GREEN);
-        }
-        
-    }
+    
+    
     
     
     public void mouseActions(JPanel panel) {

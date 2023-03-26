@@ -17,7 +17,6 @@ public class BoatTable extends javax.swing.JFrame implements Observer {
     /**
      * Creates new form BoatTable
      */
-
     public static final int BoardWidth = 10;
     private final BoardManager boardManager;
 
@@ -33,7 +32,8 @@ public class BoatTable extends javax.swing.JFrame implements Observer {
         btnAddBoat3Size.setName("btnAddBoat3Size");
         btnAddBoat2Size.setName("btnAddBoat2Size");
         btnAddBoat1Size.setName("btnAddBoat1Size");
-        fillMainBoardStart();
+        //fillBoardOponent("..--................----..--..................--.....----..............---...........---............");
+        //fillMainBoardStart();
 
     }
 
@@ -61,6 +61,7 @@ public class BoatTable extends javax.swing.JFrame implements Observer {
         lblNumberBoat1Size = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
+        btnStart = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -78,7 +79,7 @@ public class BoatTable extends javax.swing.JFrame implements Observer {
         backgroundPanel.add(text);
 
         mainBoard.setBackground(new java.awt.Color(255, 255, 255));
-        mainBoard.setLayout(new java.awt.GridLayout());
+        mainBoard.setLayout(new java.awt.GridLayout(1, 0));
         backgroundPanel.add(mainBoard);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -128,57 +129,69 @@ public class BoatTable extends javax.swing.JFrame implements Observer {
 
         jLabel6.setText("Barcos Disponibles");
 
+        btnStart.setText("Start");
+        btnStart.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnStartMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
-                jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(19, 19, 19)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(btnAddBoat2Size)
-                                        .addComponent(btnAddBoat1Size)
-                                        .addComponent(btnAddBoat3Size)
-                                        .addComponent(btnAddBoat4Size))
-                                .addGap(18, 18, 18)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(lblNumberBoat2Size, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(lblNumberBoat1Size, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(lblNumberBoat4Size, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(lblNumberBoat3Size, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addContainerGap(15, Short.MAX_VALUE))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addContainerGap())
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                                .addComponent(jLabel6)
-                                                .addGap(36, 36, 36))))
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnAddBoat2Size)
+                    .addComponent(btnAddBoat1Size)
+                    .addComponent(btnAddBoat3Size)
+                    .addComponent(btnAddBoat4Size))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblNumberBoat2Size, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblNumberBoat1Size, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblNumberBoat4Size, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblNumberBoat3Size, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(15, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addGap(36, 36, 36))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnStart)
+                        .addGap(44, 44, 44))))
         );
         jPanel1Layout.setVerticalGroup(
-                jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(11, 11, 11)
-                                .addComponent(jLabel5)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(btnAddBoat4Size)
-                                        .addComponent(lblNumberBoat4Size, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(29, 29, 29)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(btnAddBoat3Size)
-                                        .addComponent(lblNumberBoat3Size, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(26, 26, 26)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(lblNumberBoat2Size, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(btnAddBoat2Size))
-                                .addGap(18, 18, 18)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(lblNumberBoat1Size, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(btnAddBoat1Size))
-                                .addContainerGap(32, Short.MAX_VALUE))
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(11, 11, 11)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAddBoat4Size)
+                    .addComponent(lblNumberBoat4Size, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(29, 29, 29)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAddBoat3Size)
+                    .addComponent(lblNumberBoat3Size, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(26, 26, 26)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblNumberBoat2Size, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAddBoat2Size))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblNumberBoat1Size, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAddBoat1Size))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
+                .addComponent(btnStart)
+                .addContainerGap())
         );
 
         backgroundPanel.add(jPanel1);
@@ -186,12 +199,14 @@ public class BoatTable extends javax.swing.JFrame implements Observer {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(backgroundPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 673, javax.swing.GroupLayout.PREFERRED_SIZE)
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(backgroundPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 667, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(backgroundPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 592, javax.swing.GroupLayout.PREFERRED_SIZE)
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(backgroundPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 592, Short.MAX_VALUE)
         );
 
         pack();
@@ -217,11 +232,18 @@ public class BoatTable extends javax.swing.JFrame implements Observer {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnAddBoat2SizeActionPerformed
 
+    private void btnStartMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnStartMouseClicked
+        System.out.println(CellManager.getMyCellManager().generateMapBoats());
+    }//GEN-LAST:event_btnStartMouseClicked
+
     public JPanel getMainBoard() {
         return mainBoard;
     }
 
-
+    /**
+     * Pinta incialmente cada celda
+     *
+     */
     public void fillMainBoardStart() {
         mainBoard.setPreferredSize(new Dimension(350, 350));
         mainBoard.setLocation((backgroundPanel.getWidth() / 2) - (backgroundPanel.getWidth() / 2), (backgroundPanel.getHeight() / 2) - (backgroundPanel.getHeight() / 2));
@@ -232,11 +254,11 @@ public class BoatTable extends javax.swing.JFrame implements Observer {
                 mainBoard.add(currentPanel.getPanel());
             }
         }
-
-
     }
 
-
+    /**
+     * Repinta tomando en cuenta el estado de cada celda
+     */
     public void fillMainBoardRepaint() {
         this.repaint();
         mainBoard.removeAll();
@@ -250,6 +272,37 @@ public class BoatTable extends javax.swing.JFrame implements Observer {
         }
     }
 
+    /**
+     * Pinta incialmente cada celda
+     *
+     */
+
+    public void fillBoardOponent(String oponentMap) {
+        String prueba = "";     
+        int global = 0;
+        mainBoard.setPreferredSize(new Dimension(350, 350));
+        mainBoard.setLocation((backgroundPanel.getWidth() / 2) - (backgroundPanel.getWidth() / 2), (backgroundPanel.getHeight() / 2) - (backgroundPanel.getHeight() / 2));
+        for (int i = 0; i < BoardWidth; i++) {
+            for (int j = 0; j < BoardWidth; j++) {
+                Cell currentPanel = new Cell((j+1) + "," + (i+1), boardManager, this);
+                char currentSimbol = oponentMap.charAt((i + j));
+                prueba += currentSimbol;
+                if (oponentMap.charAt(global)== Status.CB.getValue()) {
+                    currentPanel.getPanel().setBackground(Color.GREEN);
+                    currentPanel.setPermanent(true);
+                } else {
+                    currentPanel.setPermanent(false);
+                }
+                global++;
+                CellManager.getMyCellManager().getCellList().add(currentPanel);
+                mainBoard.add(currentPanel.getPanel());
+            }
+            
+        }
+        System.out.println("Original 1: " + oponentMap);
+        System.out.println("Original 2: " + prueba);
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel backgroundPanel;
@@ -257,6 +310,7 @@ public class BoatTable extends javax.swing.JFrame implements Observer {
     private javax.swing.JButton btnAddBoat2Size;
     private javax.swing.JButton btnAddBoat3Size;
     private javax.swing.JButton btnAddBoat4Size;
+    private javax.swing.JButton btnStart;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
@@ -306,7 +360,6 @@ public class BoatTable extends javax.swing.JFrame implements Observer {
                             CellManager.getMyCellManager().setBoatAvaliable1(false);
                         }
                         break;
-
 
                     default:
                         throw new AssertionError();
