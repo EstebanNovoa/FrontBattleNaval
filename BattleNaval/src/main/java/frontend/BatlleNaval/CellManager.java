@@ -42,20 +42,21 @@ public class CellManager implements Observer {
         return cellList;
     }
 
-
-    public void setBoat(Cell currentPanel, int boatSize) {
-        String[] coordenate = currentPanel.getPanel().getName().split(",");
-        int x = Integer.parseInt(coordenate[0]);
-        int y = Integer.parseInt(coordenate[1]);
-        if (y + (boatSize - 1) <= 8) {
-            for (int i = 0; i < boatSize; i++) {
-                System.out.println("Cordenadas que va a pintar" + search(x, y).getPanel().getName());
-                Cell cellPanel = search(x, y);
-                cellPanel.setPermanent(true);
-                y++;
+    
+    public void setBoat(Cell currentPanel, int boatSize) {       
+            String[] coordenate = currentPanel.getPanel().getName().split(",");
+            int x = Integer.parseInt(coordenate[0]);
+            int y = Integer.parseInt(coordenate[1]);
+            if (y + (boatSize - 1) <= 8) {
+                for (int i = 0; i < boatSize; i++) {
+                    Cell cellPanel = search(x, y);
+                    cellPanel.setPermanent(true);
+                    y++;
+                }
             }
-        }
     }
+    
+
 
     public void setBoatAvaliable4(boolean boatAvaliable4) {
         this.boatAvaliable4 = boatAvaliable4;
@@ -75,7 +76,7 @@ public class CellManager implements Observer {
 
 
     public Cell search(int x, int y) {
-        String nameToFind = x + "," + y;
+        String nameToFind = x + "," + y;  
         for (Cell currenCell : cellList) {
             if (currenCell.getPanel().getName().equals(nameToFind)) {
                 return currenCell;
@@ -120,15 +121,45 @@ public class CellManager implements Observer {
         }
     }
 
+    
+    /**
+     * Meotdo de prueba
+     */
+    public void fillMainBoardStart() {
+        for (int i = 1; i <= 10; i++) {
+            for (int j = 1; j <= 10; j++) {
+                Cell currentPanel = new Cell((j + "," + i));
+                cellList.add(currentPanel);
+            }
+        }
+    }
+    
+    /**
+     * Genera el mapa de los botes establecidos - cuando hay botes y . celda sin descubrir
+     * @return 
+     */
+    public String generateMapBoats(){
+        String map = "";
+        for (int i = 1; i <= 10; i++) {
+            for (int j = 1; j <= 10; j++) {
+                if (search(i, j).isPermanent()) {
+                    map += "-";
+                } else {
+                    map += ".";
+                }
+                System.out.println( "Coordenada: " + i + " , " + j+ " \nSe agrego, posicion actual: " + map.length());
+
+            }
+        }
+        return map;
+    }
+
 
 //    
 //    public static void main(String[] args) {
 //        CellManager a =  new CellManager();
-//        a.prueba();
-//        
+//        a.fillMainBoardStart();
 //        Cell b = a.search(8, 2);
-//        System.out.println("El bote buiscado es : " + b.getPanel().getName());
-//       // a.setBoat(b, 4);
-//        
+//        System.out.println(a.generateMapBoats().length());
 //    }
 }

@@ -13,10 +13,9 @@ import java.util.Observable;
 /**
  * @author novoa
  */
-public class Cell extends Observable {
-
-
-    private boolean status;
+public class Cell extends Observable{
+    
+    private Status status;
     private boolean permanent = false;
     private JPanel panel;
 
@@ -31,7 +30,23 @@ public class Cell extends Observable {
         setProperties(name);
     }
 
-    private void setProperties(String name) {
+    public Cell(String name) {
+        panel = new JPanel();
+        setProperties(name);
+    }
+    
+    
+
+    public Status isStatus() {
+        return status;
+    }
+
+    public boolean isPermanent() {
+        return permanent;
+    }
+    
+    
+    private void setProperties(String name){
         panel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         panel.setName(name);
         if (!permanent) {
@@ -44,18 +59,14 @@ public class Cell extends Observable {
 
     public void setPermanent(boolean permanent) {
         this.permanent = permanent;
+        this.status = Status.CB;
     }
 
-
-    public void setStatus(boolean status) {
-        status = false;
-        if (status == false) {
-            panel.setBackground(Color.GREEN);
-        }
-
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
-
+   
     public void mouseActions(JPanel panel) {
         panel.addMouseListener(new MouseAdapter() {
                                    @Override
