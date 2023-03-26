@@ -39,7 +39,7 @@ public class FrameLogin extends JFrame implements Texts {
         this.fieldGetName = new JTextField();
         this.btnAcceptLogin = new JButton(BTN_LOGIN);
         this.btnAcceptLogin.addActionListener(this.actionListener);
-        this.btnAcceptLogin.setActionCommand(Actions.BTN_ACCEPT_LOGIN);
+        this.btnAcceptLogin.setActionCommand(Actions.BTN_PLAY);
         ImageIcon imageIcon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/img/imag2.png")));
         this.labelImage = new JLabel(imageIcon);
         this.labelImage.setIcon(new ImageIcon(imageIcon.getImage().getScaledInstance(250, 250, Image.SCALE_DEFAULT)));

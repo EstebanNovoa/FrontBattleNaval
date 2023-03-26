@@ -42,12 +42,17 @@ public class Controller extends WindowAdapter implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        switch (e.getActionCommand()) {
-            case Actions.BTN_ACCEPT_LOGIN:
-                acceptLogin();
+        String actionCommand = e.getActionCommand();
+        System.out.println(actionCommand);
+        switch (actionCommand) {
+            case Actions.BTN_PLAY:
+                playGame();
                 break;
             case "Hola":
                 System.out.println("Hola");
+                break;
+            case Actions.SEARCH_MATCH:
+                this.searchMatch();
                 break;
             default:
                 System.out.println("Default");
@@ -55,23 +60,17 @@ public class Controller extends WindowAdapter implements ActionListener {
         }
     }
 
-    private void acceptLogin() {
-        String namePlayer = this.frameLogin.getNamePlayer();
-        System.out.println(Actions.BTN_ACCEPT_LOGIN);
+    private void searchMatch() {
+
+    }
+
+    private void playGame() {
+        String namePlayer = this.frameLogin.getNamePlayer().trim();
+        System.out.println(Actions.BTN_PLAY);
         System.out.println(namePlayer);
-        if (!namePlayer.trim().isEmpty()) {
-            try {
-                this.socket = new Socket(HOST, PORT);
-                if (socket.isConnected()) {
-                    this.output = new DataOutputStream(socket.getOutputStream());
-                    this.input = new DataInputStream(socket.getInputStream());
-                    if (output != null) {
-                        startMatch(namePlayer);
-                    }
-                }
-            } catch (IOException e) {
-                Output.showErrorMessage("Servidor no disponible");
-            }
+        if (!namePlayer.isEmpty()) {
+            this.frameLogin.dispose();
+            this.boardManager = new BoardManager(namePlayer, this);
         } else {
             Output.showInfoMessage("Por favor ingrese su nombre de usuario");
         }

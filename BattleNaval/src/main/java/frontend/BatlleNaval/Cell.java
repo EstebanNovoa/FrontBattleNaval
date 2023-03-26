@@ -4,28 +4,23 @@
  */
 package frontend.BatlleNaval;
 
-import java.awt.Color;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 import java.util.Observable;
-import javax.swing.BorderFactory;
-import javax.swing.JPanel;
 
 /**
- *
  * @author novoa
  */
 public class Cell extends Observable{
     
-    
     private Status status;
-    private boolean  permanent = false;
-    private JPanel panel; 
-    
+    private boolean permanent = false;
+    private JPanel panel;
 
-    public Cell(String name, BoardManager boardManager,BoatTable boatTable) {
+
+    public Cell(String name, BoardManager boardManager, BoatTable boatTable) {
         super();
         panel = new JPanel();
         this.addObserver(CellManager.getMyCellManager());
@@ -56,10 +51,10 @@ public class Cell extends Observable{
         panel.setName(name);
         if (!permanent) {
             panel.setBackground(Color.LIGHT_GRAY);
-        }else{
+        } else {
             panel.setBackground(Color.GREEN);
         }
-        
+
     }
 
     public void setPermanent(boolean permanent) {
@@ -71,40 +66,36 @@ public class Cell extends Observable{
         this.status = status;
     }
 
-    
-    
-    
-    
-    
+   
     public void mouseActions(JPanel panel) {
-        panel.addMouseListener( new MouseAdapter() {
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                panel.setBackground(Color.GREEN);
-                setChanged();
-            }
+        panel.addMouseListener(new MouseAdapter() {
+                                   @Override
+                                   public void mouseEntered(MouseEvent e) {
+                                       panel.setBackground(Color.GREEN);
+                                       setChanged();
+                                   }
 
-            @Override
-            public void mouseExited(MouseEvent e) {
-                if (permanent == false) {
-                    panel.setBackground(Color.LIGHT_GRAY);
-                }
+                                   @Override
+                                   public void mouseExited(MouseEvent e) {
+                                       if (permanent == false) {
+                                           panel.setBackground(Color.LIGHT_GRAY);
+                                       }
 
-            }
+                                   }
 
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                setChanged();
-                notifyObservers(Cell.this);
-                
-            }
-        }
-    
+                                   @Override
+                                   public void mouseClicked(MouseEvent e) {
+                                       setChanged();
+                                       notifyObservers(Cell.this);
 
-    );
+                                   }
+                               }
+
+
+        );
     }
-    
-    public void notiAll(){
+
+    public void notiAll() {
         setChanged();
         notifyObservers(Cell.this);
     }
@@ -112,14 +103,6 @@ public class Cell extends Observable{
     public JPanel getPanel() {
         return panel;
     }
-    
-    
 
 
-    
-    
-    
-    
-    
-    
 }

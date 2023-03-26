@@ -4,6 +4,8 @@
  */
 package frontend.BatlleNaval;
 
+import javax.swing.*;
+import java.awt.event.ActionListener;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -13,10 +15,21 @@ import java.util.Observer;
 public class BoardManager implements Observer {
 
     private BoatTable boatTable;
+    private ActionListener actionListener;
 
-    public BoardManager() {
-        boatTable = new BoatTable(this);
+    public BoardManager(String namePlayer, ActionListener actionListener) {
+        boatTable = new BoatTable(this, actionListener);
+        this.actionListener = actionListener;
         boatTable.setVisible(true);
+        this.setNamePlayer(namePlayer);
+    }
+
+    public JPanel getBoard() {
+        return this.boatTable.getMainBoard();
+    }
+
+    private void setNamePlayer(String namePlayer) {
+        this.boatTable.setNamePlayer(namePlayer);
     }
 
     @Override

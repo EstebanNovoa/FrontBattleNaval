@@ -4,21 +4,18 @@
  */
 package frontend.BatlleNaval;
 
-import java.awt.Color;
-import java.awt.Component;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Observable;
 import java.util.Observer;
 
 /**
- *
  * @author novoa
  */
-public class CellManager implements Observer{
-    
-    
+public class CellManager implements Observer {
+
+
     private ArrayList<Cell> cellList;
+
     private boolean boatAvaliable4 = true;
     private boolean boatAvaliable3 = true;
     private boolean boatAvaliable2 = true;
@@ -29,22 +26,21 @@ public class CellManager implements Observer{
     private boolean btnAdd2BoatsStatus;
     private boolean btnAdd1BoatsStatus;
     private static CellManager myCellManager;
-    
-    public CellManager(){
+
+    public CellManager() {
         cellList = new ArrayList<Cell>();
     }
-    
-    public static CellManager getMyCellManager(){
+
+    public static CellManager getMyCellManager() {
         if (myCellManager == null) {
             myCellManager = new CellManager();
         }
-            return myCellManager;
-        
+        return myCellManager;
     }
 
     public ArrayList<Cell> getCellList() {
         return cellList;
-    }    
+    }
 
     
     public void setBoat(Cell currentPanel, int boatSize) {       
@@ -58,6 +54,7 @@ public class CellManager implements Observer{
                     y++;
                 }
             }
+        }
     }
 
 
@@ -76,10 +73,7 @@ public class CellManager implements Observer{
     public void setBoatAvaliable1(boolean boatAvaliable1) {
         this.boatAvaliable1 = boatAvaliable1;
     }
-    
 
-
-    
 
     public Cell search(int x, int y) {
         String nameToFind = x + "," + y;  
@@ -91,40 +85,39 @@ public class CellManager implements Observer{
         System.out.println("Cooordenada que devuelve null es: " + x + " - " + y);
         return null;
     }
-    
+
     @Override
     public void update(Observable currentPanel, Object arg) {
-        try{
-        if (currentPanel instanceof Cell) {
-            switch (Mouse.getMyMouse().getComponentClicked().getName()) {
-                case "btnAddBoat4Size":
-                    if (boatAvaliable4) {
-                        setBoat((Cell) currentPanel, 4);                        
-                    }
-                    break;
-                case "btnAddBoat3Size":
-                    if (boatAvaliable3) {
-                        setBoat((Cell) currentPanel, 3);                        
-                    }
-                    break;
-                case "btnAddBoat2Size":
-                    if (boatAvaliable2) {
-                        setBoat((Cell) currentPanel, 2);                        
-                    }                
-                    break;
-                case "btnAddBoat1Size":
-                    if (boatAvaliable1) {
-                        setBoat((Cell) currentPanel, 1);                        
-                    }                   
-                    break;
-                default:
-                    throw new AssertionError();
-            }
+        try {
+            if (currentPanel instanceof Cell) {
+                switch (Mouse.getMyMouse().getComponentClicked().getName()) {
+                    case "btnAddBoat4Size":
+                        if (boatAvaliable4) {
+                            setBoat((Cell) currentPanel, 4);
+                        }
+                        break;
+                    case "btnAddBoat3Size":
+                        if (boatAvaliable3) {
+                            setBoat((Cell) currentPanel, 3);
+                        }
+                        break;
+                    case "btnAddBoat2Size":
+                        if (boatAvaliable2) {
+                            setBoat((Cell) currentPanel, 2);
+                        }
+                        break;
+                    case "btnAddBoat1Size":
+                        if (boatAvaliable1) {
+                            setBoat((Cell) currentPanel, 1);
+                        }
+                        break;
+                    default:
+                        throw new AssertionError();
+                }
 
-        }
-        }
-        catch(Exception e){
-            
+            }
+        } catch (Exception e) {
+
         }
     }
 
