@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package frontend.BatlleNaval;
 
 import java.util.ArrayList;
@@ -42,20 +38,19 @@ public class CellManager implements Observer {
         return cellList;
     }
 
-    
-    public void setBoat(Cell currentPanel, int boatSize) {       
-            String[] coordenate = currentPanel.getPanel().getName().split(",");
-            int x = Integer.parseInt(coordenate[0]);
-            int y = Integer.parseInt(coordenate[1]);
-            if (y + (boatSize - 1) <= 8) {
-                for (int i = 0; i < boatSize; i++) {
-                    Cell cellPanel = search(x, y);
-                    cellPanel.setPermanent(true);
-                    y++;
-                }
+
+    public void setBoat(Cell currentPanel, int boatSize) {
+        String[] coordenate = currentPanel.getPanel().getName().split(",");
+        int x = Integer.parseInt(coordenate[0]);
+        int y = Integer.parseInt(coordenate[1]);
+        if (y + (boatSize - 1) <= 8) {
+            for (int i = 0; i < boatSize; i++) {
+                Cell cellPanel = search(x, y);
+                cellPanel.setPermanent(true);
+                y++;
             }
+        }
     }
-    
 
 
     public void setBoatAvaliable4(boolean boatAvaliable4) {
@@ -76,7 +71,7 @@ public class CellManager implements Observer {
 
 
     public Cell search(int x, int y) {
-        String nameToFind = x + "," + y;  
+        String nameToFind = x + "," + y;
         for (Cell currenCell : cellList) {
             if (currenCell.getPanel().getName().equals(nameToFind)) {
                 return currenCell;
@@ -121,7 +116,7 @@ public class CellManager implements Observer {
         }
     }
 
-    
+
     /**
      * Meotdo de prueba
      */
@@ -133,12 +128,13 @@ public class CellManager implements Observer {
             }
         }
     }
-    
+
     /**
      * Genera el mapa de los botes establecidos - cuando hay botes y . celda sin descubrir
-     * @return 
+     *
+     * @return String que representa el tablero
      */
-    public String generateMapBoats(){
+    public String generateMapBoats() {
         String map = "";
         for (int i = 1; i <= 10; i++) {
             for (int j = 1; j <= 10; j++) {
@@ -147,19 +143,10 @@ public class CellManager implements Observer {
                 } else {
                     map += ".";
                 }
-                System.out.println( "Coordenada: " + i + " , " + j+ " \nSe agrego, posicion actual: " + map.length());
+                System.out.println("Coordenada: " + i + " , " + j + " \nSe agrego, posicion actual: " + map.length());
 
             }
         }
         return map;
     }
-
-
-//    
-//    public static void main(String[] args) {
-//        CellManager a =  new CellManager();
-//        a.fillMainBoardStart();
-//        Cell b = a.search(8, 2);
-//        System.out.println(a.generateMapBoats().length());
-//    }
 }

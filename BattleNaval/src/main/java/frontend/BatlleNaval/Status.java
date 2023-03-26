@@ -5,21 +5,20 @@
 package frontend.BatlleNaval;
 
 /**
- *
  * @author novoa
  */
 public enum Status {
-    CBS('.'), // Casilla blanco sin destruir
+    CBS('.'), // Casilla blanca sin destruir
     CB('-'), // Casilla con barco
     CBD('x'), // Casilla con barco destruido
     CD(','); // Casilla descubierta (sin valor)
-    
+
     private final char value;
-    
+
     private Status(char value) {
         this.value = value;
     }
-    
+
     public char getValue() {
         return this.value;
     }

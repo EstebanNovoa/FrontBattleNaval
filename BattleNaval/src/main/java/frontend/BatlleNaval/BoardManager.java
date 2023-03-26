@@ -1,8 +1,5 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package frontend.BatlleNaval;
+
 
 import javax.swing.*;
 import java.awt.event.ActionListener;
@@ -24,7 +21,7 @@ public class BoardManager implements Observer {
         this.setNamePlayer(namePlayer);
     }
 
-    public void addBoardOpponent(){
+    public void addBoardOpponent() {
         this.boatTable.addBoardOpponent();
     }
 

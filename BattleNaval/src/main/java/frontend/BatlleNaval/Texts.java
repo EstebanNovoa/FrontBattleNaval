@@ -5,6 +5,5 @@ public interface Texts {
     String BTN_LOGIN = "Jugar";
     String WAIT_MATCH = "Esperando partida";
 
-
     String BTN_SEARCH_MATCH = "Iniciar";
 }
