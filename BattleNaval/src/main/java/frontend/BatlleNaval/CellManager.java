@@ -54,8 +54,8 @@ public class CellManager implements Observer {
                     y++;
                 }
             }
-        }
     }
+    
 
 
     public void setBoatAvaliable4(boolean boatAvaliable4) {
@@ -155,11 +155,11 @@ public class CellManager implements Observer {
     }
 
 
-    
-    public static void main(String[] args) {
-        CellManager a =  new CellManager();
-        a.fillMainBoardStart();
-        Cell b = a.search(8, 2);
-        System.out.println(a.generateMapBoats().length());
-    }
+//    
+//    public static void main(String[] args) {
+//        CellManager a =  new CellManager();
+//        a.fillMainBoardStart();
+//        Cell b = a.search(8, 2);
+//        System.out.println(a.generateMapBoats().length());
+//    }
 }

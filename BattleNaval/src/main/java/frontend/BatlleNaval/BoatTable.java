@@ -37,7 +37,7 @@ public class BoatTable extends javax.swing.JFrame implements Observer {
         btnAddBoat2Size.setName("btnAddBoat2Size");
         btnAddBoat1Size.setName("btnAddBoat1Size");
         //fillBoardOponent("..--................----..--..................--.....----..............---...........---............");
-        //fillMainBoardStart();
+        fillMainBoardStart();
 
     }
 
@@ -373,13 +373,17 @@ public class BoatTable extends javax.swing.JFrame implements Observer {
                         }
                         break;
                     }
-                    default:
-                        throw new AssertionError();
                 }
 
             }
         } catch (Exception e) {
         }
+    }
+    
+    public static void main(String[] args) {
+        BoatTable a = new BoatTable(new BoardManager("", null),(e) -> {
+        });
+        a.setVisible(true);
     }
 
 }
