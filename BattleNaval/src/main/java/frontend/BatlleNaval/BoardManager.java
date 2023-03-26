@@ -4,16 +4,13 @@
  */
 package frontend.BatlleNaval;
 
-import frontend.BatlleNaval.login.FrameLogin;
-
 import java.util.Observable;
 import java.util.Observer;
 
 /**
- *
  * @author novoa
  */
-public class BoardManager implements Observer{
+public class BoardManager implements Observer {
 
     private BoatTable boatTable;
 
@@ -23,8 +20,6 @@ public class BoardManager implements Observer{
     }
 
 
-
-
     @Override
     public void update(Observable o, Object arg) {
         if (o instanceof Cell) {
@@ -32,10 +27,6 @@ public class BoardManager implements Observer{
         }
 
     }
-
-
-
-
 
 
 }

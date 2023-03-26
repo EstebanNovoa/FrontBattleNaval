@@ -3,6 +3,7 @@ package frontend.controllers;
 import frontend.BatlleNaval.Actions;
 import frontend.BatlleNaval.BoardManager;
 import frontend.BatlleNaval.MyColors;
+import frontend.BatlleNaval.Output;
 import frontend.BatlleNaval.login.FrameLogin;
 
 import java.awt.*;
@@ -43,10 +44,7 @@ public class Controller extends WindowAdapter implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
             case Actions.BTN_ACCEPT_LOGIN:
-                System.out.println("BTN_ACCEPT_LOGIN");
-                this.writeUTF(Actions.SEARCH_MATCH);
-                this.writeUTF(this.frameLogin.getNamePlayer());
-//                this.writeUTF(this.boardManager.getBoard());
+                acceptLogin();
                 break;
             case "Hola":
                 System.out.println("Hola");
@@ -58,23 +56,27 @@ public class Controller extends WindowAdapter implements ActionListener {
     }
 
     private void acceptLogin() {
-//        String name = this.frameLogin.getNamePlayer().trim();
-//        if (!name.isEmpty()) {
-//            try {
-//                this.socket = new Socket(HOST, PORT);
-//                if (socket.isConnected()) {
-//                    this.output = new DataOutputStream(socket.getOutputStream());
-//                    this.input = new DataInputStream(socket.getInputStream());
-//                    if (output != null) {
-//                        startMatch(name);
-//                    }
-//                }
-//            } catch (IOException e) {
-//                Output.showErrorMessage(SERVER_NOT_FOUND);
-//            }
-//        } else Output.showInfoMessage(MESSAGE_NAME_EMPTY);
-
+        String namePlayer = this.frameLogin.getNamePlayer();
+        System.out.println(Actions.BTN_ACCEPT_LOGIN);
+        System.out.println(namePlayer);
+        if (!namePlayer.trim().isEmpty()) {
+            try {
+                this.socket = new Socket(HOST, PORT);
+                if (socket.isConnected()) {
+                    this.output = new DataOutputStream(socket.getOutputStream());
+                    this.input = new DataInputStream(socket.getInputStream());
+                    if (output != null) {
+                        startMatch(namePlayer);
+                    }
+                }
+            } catch (IOException e) {
+                Output.showErrorMessage("Servidor no disponible");
+            }
+        } else {
+            Output.showInfoMessage("Por favor ingrese su nombre de usuario");
+        }
     }
+
 
     private synchronized void initMatch() {
         isWaiting = false;
