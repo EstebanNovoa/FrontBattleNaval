@@ -8,6 +8,7 @@ import javax.swing.border.EtchedBorder;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowListener;
+import java.util.Objects;
 
 public class FrameLogin extends JFrame implements Texts {
 
@@ -20,13 +21,14 @@ public class FrameLogin extends JFrame implements Texts {
     private JLabel labelImage;
     private JDialog dialogWaitMatch;
 
-    public FrameLogin(ActionListener actionListener, WindowListener windowListener) throws HeadlessException {
+    public FrameLogin(ActionListener actionListener, WindowListener windowListener, Color color) throws HeadlessException {
         super("Batalla Naval");
         this.actionListener = actionListener;
         this.windowListener = windowListener;
+        this.getContentPane().setBackground(color);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setSize(new Dimension(500, 500));
+        setSize(new Dimension(550, 300));
         init();
         setVisible(true);
     }
@@ -38,8 +40,7 @@ public class FrameLogin extends JFrame implements Texts {
         this.btnAcceptLogin = new JButton(BTN_LOGIN);
         this.btnAcceptLogin.addActionListener(this.actionListener);
         this.btnAcceptLogin.setActionCommand(Actions.BTN_ACCEPT_LOGIN);
-        System.out.println(getClass().getResource("frontend/BatlleNaval/login/GameIcon.jpg"));
-        ImageIcon imageIcon = new ImageIcon("frontend/BatlleNaval/login/GameIcon.jpg");
+        ImageIcon imageIcon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/img/imag2.png")));
         this.labelImage = new JLabel(imageIcon);
         this.labelImage.setIcon(new ImageIcon(imageIcon.getImage().getScaledInstance(250, 250, Image.SCALE_DEFAULT)));
         this.labelImage.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
@@ -55,6 +56,9 @@ public class FrameLogin extends JFrame implements Texts {
         fill();
     }
 
+    public String getNamePlayer() {
+        return this.fieldGetName.getText();
+    }
 
     private void fill() {
         Font font = new Font("TimesRoman", Font.BOLD, 15);
