@@ -2,7 +2,9 @@ package frontend.BatlleNaval;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.util.Observable;
 import java.util.Observer;
@@ -28,15 +30,17 @@ public class BoatTable extends JFrame implements Observer {
     private JLabel lblNumberBoat2Size;
     private JLabel lblNumberBoat3Size;
     private JLabel lblNumberBoat4Size;
-    private JPanel mainBoard;
-    private JPanel mainBoard2;
+    private JPanel userBoard;
+    private JPanel opponentBoard;
     private JLabel textTittle;
 
     public BoatTable(BoardManager boardManager, ActionListener actionListener) {
         initComponents(actionListener);
         this.setLocationRelativeTo(null);
-        this.setResizable(false);
-        mainBoard.setLayout(new GridLayout(BoardWidth, BoardWidth));
+//        this.setResizable(false);
+        this.setSize(675, 460);
+        userBoard.setLayout(new GridLayout(BoardWidth, BoardWidth));
+        opponentBoard.setLayout(new GridLayout(BoardWidth, BoardWidth));
         this.boardManager = boardManager;
         btnAddBoat4Size.addMouseListener(Mouse.getMyMouse());
         btnAddBoat3Size.addMouseListener(Mouse.getMyMouse());
@@ -46,13 +50,17 @@ public class BoatTable extends JFrame implements Observer {
         btnAddBoat3Size.setName("btnAddBoat3Size");
         btnAddBoat2Size.setName("btnAddBoat2Size");
         btnAddBoat1Size.setName("btnAddBoat1Size");
-        fillMainBoardStart();
-
+        fillUserBoardStart();
+        fillOpponentBoardStart();
     }
 
     public void setNamePlayer(String namePlayer) {
         this.namePlayer = namePlayer;
         this.textTittle.setText("Bienvenido a Batalla Naval: " + namePlayer);
+    }
+
+    public void addBoardOpponent() {
+        this.backgroundPanel.add(new JButton("Hola"));
     }
 
     /**
@@ -62,17 +70,17 @@ public class BoatTable extends JFrame implements Observer {
      */
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents(ActionListener actionListener) {
-        this.btnSearchMatch = new JButton("Iniciar");
+        this.btnSearchMatch = new JButton(Texts.BTN_SEARCH_MATCH);
         this.btnSearchMatch.addActionListener(actionListener);
         this.btnSearchMatch.setActionCommand(Actions.SEARCH_MATCH);
-        this.setBounds(10, 10, 200, 100);
 
 
         backgroundPanel = new JPanel();
 
         textTittle = new JLabel();
-        mainBoard = new JPanel();
-        mainBoard2 = new JPanel();
+        userBoard = new JPanel();
+        opponentBoard = new JPanel();
+        opponentBoard = new JPanel();
         jPanel1 = new JPanel();
         btnAddBoat4Size = new JButton();
         btnAddBoat3Size = new JButton();
@@ -87,135 +95,166 @@ public class BoatTable extends JFrame implements Observer {
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        backgroundPanel.setBackground(new java.awt.Color(102, 102, 255));
+        backgroundPanel.setBackground(new Color(102, 102, 255));
 
         textTittle.setFont(new Font("Stencil", Font.PLAIN, 24)); // NOI18N
         textTittle.setForeground(new Color(255, 255, 255));
         textTittle.setHorizontalAlignment(SwingConstants.CENTER);
         textTittle.setText("Bienvenido a Batalla Naval: " + namePlayer);
         textTittle.addMouseMotionListener(new MouseMotionAdapter() {
-            public void mouseMoved(java.awt.event.MouseEvent evt) {
+            public void mouseMoved(MouseEvent evt) {
                 textMouseMoved(evt);
             }
         });
         backgroundPanel.add(textTittle);
 
-        mainBoard.setBackground(new Color(255, 255, 255));
-//        mainBoard.setLayout(new java.awt.GridLayout());
-        backgroundPanel.add(mainBoard);
-//        backgroundPanel.add(mainBoard);
+        userBoard.setBackground(new Color(255, 255, 255));
+        opponentBoard.setBackground(new Color(255, 255, 255));
+
+        backgroundPanel.add(userBoard);
+        backgroundPanel.add(opponentBoard);
 
         jPanel1.setBackground(new Color(255, 255, 255));
 
         btnAddBoat4Size.setText("Barco : 4");
-        btnAddBoat4Size.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        btnAddBoat4Size.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
                 btnAddBoat4SizeActionPerformed(evt);
             }
         });
 
         btnAddBoat3Size.setText("Barco: 3");
-        btnAddBoat3Size.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        btnAddBoat3Size.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
                 btnAddBoat3SizeActionPerformed(evt);
             }
         });
 
         btnAddBoat1Size.setText("Barco: 1");
-        btnAddBoat1Size.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        btnAddBoat1Size.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
                 btnAddBoat1SizeActionPerformed(evt);
             }
         });
 
         btnAddBoat2Size.setText("Barco: 2");
-        btnAddBoat2Size.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        btnAddBoat2Size.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
                 btnAddBoat2SizeActionPerformed(evt);
             }
         });
 
-        lblNumberBoat2Size.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblNumberBoat2Size.setHorizontalAlignment(SwingConstants.CENTER);
         lblNumberBoat2Size.setText("3");
 
-        lblNumberBoat4Size.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblNumberBoat4Size.setHorizontalAlignment(SwingConstants.CENTER);
         lblNumberBoat4Size.setText("3");
 
-        lblNumberBoat3Size.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblNumberBoat3Size.setHorizontalAlignment(SwingConstants.CENTER);
         lblNumberBoat3Size.setText("3");
 
-        lblNumberBoat1Size.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblNumberBoat1Size.setHorizontalAlignment(SwingConstants.CENTER);
         lblNumberBoat1Size.setText("2");
 
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
+        jLabel5.setFont(new Font("Segoe UI", 0, 10)); // NOI18N
         jLabel5.setText("Barcos Restantes");
 
         jLabel6.setText("Barcos Disponibles");
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        GroupLayout jPanel1Layout = new GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(jPanel1Layout.createSequentialGroup().addGap(19, 19, 19).addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING).addComponent(btnAddBoat2Size).addComponent(btnAddBoat1Size).addComponent(btnAddBoat3Size).addComponent(btnAddBoat4Size)).addGap(18, 18, 18).addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addComponent(lblNumberBoat2Size, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE).addComponent(lblNumberBoat1Size, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE).addComponent(lblNumberBoat4Size, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE).addComponent(lblNumberBoat3Size, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)).addContainerGap(15, Short.MAX_VALUE)).addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup().addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE).addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup().addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE).addContainerGap()).addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup().addComponent(jLabel6).addGap(36, 36, 36)))));
-        jPanel1Layout.setVerticalGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(jPanel1Layout.createSequentialGroup().addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE).addGap(11, 11, 11).addComponent(jLabel5).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE).addComponent(btnAddBoat4Size).addComponent(lblNumberBoat4Size, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)).addGap(29, 29, 29).addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE).addComponent(btnAddBoat3Size).addComponent(lblNumberBoat3Size, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)).addGap(26, 26, 26).addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE).addComponent(lblNumberBoat2Size, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE).addComponent(btnAddBoat2Size)).addGap(18, 18, 18).addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE).addComponent(lblNumberBoat1Size, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE).addComponent(btnAddBoat1Size)).addContainerGap(32, Short.MAX_VALUE)));
+        jPanel1Layout.setHorizontalGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(jPanel1Layout.createSequentialGroup().addGap(19, 19, 19).addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.TRAILING).addComponent(btnAddBoat2Size).addComponent(btnAddBoat1Size).addComponent(btnAddBoat3Size).addComponent(btnAddBoat4Size)).addGap(18, 18, 18).addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING).addComponent(lblNumberBoat2Size, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE).addComponent(lblNumberBoat1Size, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE).addComponent(lblNumberBoat4Size, GroupLayout.PREFERRED_SIZE, 46, GroupLayout.PREFERRED_SIZE).addComponent(lblNumberBoat3Size, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)).addContainerGap(15, Short.MAX_VALUE)).addGroup(GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup().addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE).addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup().addComponent(jLabel5, GroupLayout.PREFERRED_SIZE, 79, GroupLayout.PREFERRED_SIZE).addContainerGap()).addGroup(GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup().addComponent(jLabel6).addGap(36, 36, 36)))));
+        jPanel1Layout.setVerticalGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(jPanel1Layout.createSequentialGroup().addComponent(jLabel6, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE).addGap(11, 11, 11).addComponent(jLabel5).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(btnAddBoat4Size).addComponent(lblNumberBoat4Size, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)).addGap(29, 29, 29).addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(btnAddBoat3Size).addComponent(lblNumberBoat3Size, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)).addGap(26, 26, 26).addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(lblNumberBoat2Size, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE).addComponent(btnAddBoat2Size)).addGap(18, 18, 18).addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(lblNumberBoat1Size, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE).addComponent(btnAddBoat1Size)).addContainerGap(32, Short.MAX_VALUE)));
 
         backgroundPanel.add(jPanel1);
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addComponent(backgroundPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 673, javax.swing.GroupLayout.PREFERRED_SIZE));
-        layout.setVerticalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addComponent(backgroundPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 592, javax.swing.GroupLayout.PREFERRED_SIZE));
         backgroundPanel.add(btnSearchMatch);
+        backgroundPanel.add(opponentBoard);
+        GroupLayout layout = new GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING).addComponent(backgroundPanel, GroupLayout.PREFERRED_SIZE, 700, GroupLayout.PREFERRED_SIZE));
+        layout.setVerticalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING).addComponent(backgroundPanel, GroupLayout.PREFERRED_SIZE, 1000, GroupLayout.PREFERRED_SIZE));
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void textMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textMouseMoved
+    private void textMouseMoved(MouseEvent evt) {//GEN-FIRST:event_textMouseMoved
         // TODO add your handling code here:
     }//GEN-LAST:event_textMouseMoved
 
-    private void btnAddBoat4SizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddBoat4SizeActionPerformed
+    private void btnAddBoat4SizeActionPerformed(ActionEvent evt) {//GEN-FIRST:event_btnAddBoat4SizeActionPerformed
 
     }//GEN-LAST:event_btnAddBoat4SizeActionPerformed
 
-    private void btnAddBoat3SizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddBoat3SizeActionPerformed
+    private void btnAddBoat3SizeActionPerformed(ActionEvent evt) {//GEN-FIRST:event_btnAddBoat3SizeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnAddBoat3SizeActionPerformed
 
-    private void btnAddBoat1SizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddBoat1SizeActionPerformed
+    private void btnAddBoat1SizeActionPerformed(ActionEvent evt) {//GEN-FIRST:event_btnAddBoat1SizeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnAddBoat1SizeActionPerformed
 
-    private void btnAddBoat2SizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddBoat2SizeActionPerformed
+    private void btnAddBoat2SizeActionPerformed(ActionEvent evt) {//GEN-FIRST:event_btnAddBoat2SizeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnAddBoat2SizeActionPerformed
 
-    public JPanel getMainBoard() {
-        return mainBoard;
+    public JPanel getUserBoard() {
+        return userBoard;
+    }
+
+    public JPanel getOpponentBoard() {
+        return opponentBoard;
     }
 
 
-    public void fillMainBoardStart() {
-        mainBoard.setPreferredSize(new Dimension(350, 350));
-        mainBoard.setLocation((backgroundPanel.getWidth() / 2) - (backgroundPanel.getWidth() / 2), (backgroundPanel.getHeight() / 2) - (backgroundPanel.getHeight() / 2));
+    public void fillUserBoardStart() {
+        userBoard.setPreferredSize(new Dimension(350, 350));
+        userBoard.setLocation((backgroundPanel.getWidth() / 2) - (backgroundPanel.getWidth() / 2), (backgroundPanel.getHeight() / 2) - (backgroundPanel.getHeight() / 2));
         for (int i = 1; i <= BoardWidth; i++) {
             for (int j = 1; j <= BoardWidth; j++) {
                 Cell currentPanel = new Cell((j + "," + i), boardManager, this);
                 CellManager.getMyCellManager().getCellList().add(currentPanel);
-                mainBoard.add(currentPanel.getPanel());
+                userBoard.add(currentPanel.getPanel());
             }
         }
 
+    }
+
+    public void fillOpponentBoardStart() {
+        opponentBoard.setPreferredSize(new Dimension(350, 350));
+        opponentBoard.setLocation((backgroundPanel.getWidth() / 2) - (backgroundPanel.getWidth() / 2), (backgroundPanel.getHeight() / 2) - (backgroundPanel.getHeight() / 2));
+        for (int i = 1; i <= BoardWidth; i++) {
+            for (int j = 1; j <= BoardWidth; j++) {
+                Cell currentPanel = new Cell((j + "," + i), boardManager, this);
+                CellManager.getMyCellManager().getCellList().add(currentPanel);
+                opponentBoard.add(currentPanel.getPanel());
+            }
+        }
 
     }
 
 
     public void fillMainBoardRepaint() {
         this.repaint();
-        mainBoard.removeAll();
-        mainBoard.revalidate();
+        userBoard.removeAll();
+        userBoard.revalidate();
         for (int i = 1; i <= BoardWidth; i++) {
             for (int j = 1; j <= BoardWidth; j++) {
                 Cell currentPanel = CellManager.getMyCellManager().search(i, j);
                 CellManager.getMyCellManager().getCellList().add(currentPanel);
-                mainBoard.add(currentPanel.getPanel());
+                userBoard.add(currentPanel.getPanel());
+            }
+        }
+    }
+
+    public void fillOpponentBoardRepaint() {
+        this.repaint();
+        opponentBoard.removeAll();
+        opponentBoard.revalidate();
+        for (int i = 1; i <= BoardWidth; i++) {
+            for (int j = 1; j <= BoardWidth; j++) {
+                Cell currentPanel = CellManager.getMyCellManager().search(i, j);
+                CellManager.getMyCellManager().getCellList().add(currentPanel);
+                opponentBoard.add(currentPanel.getPanel());
             }
         }
     }

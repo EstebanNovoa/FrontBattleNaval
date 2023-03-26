@@ -48,9 +48,6 @@ public class Controller extends WindowAdapter implements ActionListener {
             case Actions.BTN_PLAY:
                 playGame();
                 break;
-            case "Hola":
-                System.out.println("Hola");
-                break;
             case Actions.SEARCH_MATCH:
                 this.searchMatch();
                 break;
@@ -61,7 +58,7 @@ public class Controller extends WindowAdapter implements ActionListener {
     }
 
     private void searchMatch() {
-
+        this.boardManager.addBoardOpponent();
     }
 
     private void playGame() {

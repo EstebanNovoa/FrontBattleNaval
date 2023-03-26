@@ -6,4 +6,5 @@ public interface Texts {
     String WAIT_MATCH = "Esperando partida";
 
 
+    String BTN_SEARCH_MATCH = "Iniciar";
 }

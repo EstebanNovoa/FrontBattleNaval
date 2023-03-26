@@ -24,8 +24,12 @@ public class BoardManager implements Observer {
         this.setNamePlayer(namePlayer);
     }
 
+    public void addBoardOpponent(){
+        this.boatTable.addBoardOpponent();
+    }
+
     public JPanel getBoard() {
-        return this.boatTable.getMainBoard();
+        return this.boatTable.getUserBoard();
     }
 
     private void setNamePlayer(String namePlayer) {
