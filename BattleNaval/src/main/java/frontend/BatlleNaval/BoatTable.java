@@ -2,7 +2,10 @@ package frontend.BatlleNaval;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -11,35 +14,35 @@ import java.util.Observer;
  */
 public class BoatTable extends JFrame implements Observer {
 
-    /**
-     * Creates new form BoatTable
-     */
     public static final int BoardWidth = 10;
     private final BoardManager boardManager;
     private String namePlayer;
-    private JPanel backgroundPanel;
     private JButton btnAddBoat1Size;
     private JButton btnAddBoat2Size;
     private JButton btnAddBoat3Size;
     private JButton btnAddBoat4Size;
     private JButton btnSearchMatch;
     private JButton btnStart;
-    private JLabel jLabel5;
-    private JLabel jLabel6;
-    private JPanel jPanel1;
+    private JLabel labelTextTittle;
+    private JLabel labelNameOpponent;
+    private JLabel labelRemainingBoats;
+    private JLabel labelAvailableBoats;
+
     private JLabel lblNumberBoat1Size;
     private JLabel lblNumberBoat2Size;
     private JLabel lblNumberBoat3Size;
     private JLabel lblNumberBoat4Size;
+    private JPanel backgroundPanel;
+    private JPanel panelSelectBoats;
     private JPanel userBoard;
     private JPanel opponentBoard;
-    private JLabel textTittle;
+
 
     public BoatTable(BoardManager boardManager, ActionListener actionListener) {
         initComponents(actionListener);
         this.setLocationRelativeTo(null);
-//        this.setResizable(false);
-        this.setSize(675, 460);
+        this.setResizable(false);
+        this.setSize(675, 1000);
         userBoard.setLayout(new GridLayout(BoardWidth, BoardWidth));
         opponentBoard.setLayout(new GridLayout(BoardWidth, BoardWidth));
         this.boardManager = boardManager;
@@ -57,11 +60,11 @@ public class BoatTable extends JFrame implements Observer {
 
     public void setNamePlayer(String namePlayer) {
         this.namePlayer = namePlayer;
-        this.textTittle.setText("Bienvenido a Batalla Naval: " + namePlayer);
+        this.labelTextTittle.setText("Bienvenido a Batalla Naval: " + namePlayer);
     }
 
     public void addBoardOpponent() {
-        this.backgroundPanel.add(new JButton("Hola"));
+//        this.backgroundPanel.add(new JButton("Hola"));
     }
 
     /**
@@ -76,12 +79,14 @@ public class BoatTable extends JFrame implements Observer {
         this.btnSearchMatch.setActionCommand(Actions.SEARCH_MATCH);
 
         backgroundPanel = new JPanel();
-
-        textTittle = new JLabel();
+        backgroundPanel.setLayout(null);
+        backgroundPanel.setBounds(0, 0, 500, 1000);
+        labelTextTittle = new JLabel();
+        labelNameOpponent = new JLabel("Sin oponente");
         userBoard = new JPanel();
         opponentBoard = new JPanel();
         opponentBoard = new JPanel();
-        jPanel1 = new JPanel();
+        panelSelectBoats = new JPanel();
         btnAddBoat4Size = new JButton();
         btnAddBoat3Size = new JButton();
         btnAddBoat1Size = new JButton();
@@ -90,31 +95,37 @@ public class BoatTable extends JFrame implements Observer {
         lblNumberBoat4Size = new JLabel();
         lblNumberBoat3Size = new JLabel();
         lblNumberBoat1Size = new JLabel();
-        jLabel5 = new JLabel();
-        jLabel6 = new JLabel();
+        labelRemainingBoats = new JLabel();
+        labelAvailableBoats = new JLabel();
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        backgroundPanel.setBackground(new Color(102, 102, 255));
+        backgroundPanel.setBackground(new Color(255, 102, 102));
 
-        textTittle.setFont(new Font("Stencil", Font.PLAIN, 24)); // NOI18N
-        textTittle.setForeground(new Color(255, 255, 255));
-        textTittle.setHorizontalAlignment(SwingConstants.CENTER);
-        textTittle.setText("Bienvenido a Batalla Naval: " + namePlayer);
-        textTittle.addMouseMotionListener(new MouseMotionAdapter() {
-            public void mouseMoved(MouseEvent evt) {
-                textMouseMoved(evt);
-            }
-        });
-        backgroundPanel.add(textTittle);
+        labelTextTittle.setFont(new Font("SEGOE", Font.ITALIC + Font.BOLD, 24)); // NOI18N
+        labelTextTittle.setForeground(new Color(255, 255, 255));
+        labelTextTittle.setHorizontalAlignment(SwingConstants.CENTER);
+        labelNameOpponent.setFont(new Font("SEGOE", Font.ITALIC + Font.BOLD, 24)); // NOI18N
+        labelNameOpponent.setForeground(new Color(255, 255, 255));
+        labelNameOpponent.setHorizontalAlignment(SwingConstants.LEFT);
+        labelTextTittle.setText("Bienvenido a Batalla Naval: " + namePlayer);
+        labelTextTittle.setBounds(0, 15, 675, 20);
+
+        labelNameOpponent.setBounds(15, 490, 675, 25);
+
+        backgroundPanel.add(labelTextTittle);
+        backgroundPanel.add(labelNameOpponent);
 
         userBoard.setBackground(new Color(255, 255, 255));
         opponentBoard.setBackground(new Color(255, 255, 255));
 
+        userBoard.setBounds(20, 70, 400, 400);
+        opponentBoard.setBounds(20, 540, 400, 400);
+
         backgroundPanel.add(userBoard);
         backgroundPanel.add(opponentBoard);
 
-        jPanel1.setBackground(new Color(255, 255, 255));
+        panelSelectBoats.setBackground(new Color(255, 255, 255));
 
         btnAddBoat4Size.setText("Barco : 4");
         btnAddBoat4Size.addActionListener(new ActionListener() {
@@ -156,23 +167,23 @@ public class BoatTable extends JFrame implements Observer {
         lblNumberBoat1Size.setHorizontalAlignment(SwingConstants.CENTER);
         lblNumberBoat1Size.setText("2");
 
-        jLabel5.setFont(new Font("Segoe UI", Font.PLAIN, 10)); // NOI18N
-        jLabel5.setText("Barcos Restantes");
+        labelRemainingBoats.setFont(new Font("Segoe UI", Font.PLAIN, 10)); // NOI18N
+        labelRemainingBoats.setText("Barcos Restantes");
 
-        jLabel6.setText("Barcos Disponibles");
+        labelAvailableBoats.setText("Barcos Disponibles");
 
         this.btnStart = new JButton();
-        btnStart.setText("Start");
+        btnStart.setText(Texts.BTN_INIT_MATCH);
         btnStart.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent evt) {
                 btnStartMouseClicked(evt);
             }
         });
 
-        GroupLayout jPanel1Layout = new GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(jPanel1Layout.createSequentialGroup().addGap(19, 19, 19).addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.TRAILING).addComponent(btnAddBoat2Size).addComponent(btnAddBoat1Size).addComponent(btnAddBoat3Size).addComponent(btnAddBoat4Size)).addGap(18, 18, 18).addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING).addComponent(lblNumberBoat2Size, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE).addComponent(lblNumberBoat1Size, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE).addComponent(lblNumberBoat4Size, GroupLayout.PREFERRED_SIZE, 46, GroupLayout.PREFERRED_SIZE).addComponent(lblNumberBoat3Size, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)).addContainerGap(15, Short.MAX_VALUE)).addGroup(GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup().addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE).addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup().addComponent(jLabel5, GroupLayout.PREFERRED_SIZE, 79, GroupLayout.PREFERRED_SIZE).addContainerGap()).addGroup(GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup().addComponent(jLabel6).addGap(36, 36, 36)))));
-        jPanel1Layout.setVerticalGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(jPanel1Layout.createSequentialGroup().addComponent(jLabel6, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE).addGap(11, 11, 11).addComponent(jLabel5).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(btnAddBoat4Size).addComponent(lblNumberBoat4Size, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)).addGap(29, 29, 29).addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(btnAddBoat3Size).addComponent(lblNumberBoat3Size, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)).addGap(26, 26, 26).addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(lblNumberBoat2Size, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE).addComponent(btnAddBoat2Size)).addGap(18, 18, 18).addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(lblNumberBoat1Size, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE).addComponent(btnAddBoat1Size)).addContainerGap(32, Short.MAX_VALUE)));
+        GroupLayout jPanel1Layout = new GroupLayout(panelSelectBoats);
+        panelSelectBoats.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(jPanel1Layout.createSequentialGroup().addGap(19, 19, 19).addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.TRAILING).addComponent(btnAddBoat2Size).addComponent(btnAddBoat1Size).addComponent(btnAddBoat3Size).addComponent(btnAddBoat4Size)).addGap(18, 18, 18).addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING).addComponent(lblNumberBoat2Size, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE).addComponent(lblNumberBoat1Size, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE).addComponent(lblNumberBoat4Size, GroupLayout.PREFERRED_SIZE, 46, GroupLayout.PREFERRED_SIZE).addComponent(lblNumberBoat3Size, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)).addContainerGap(15, Short.MAX_VALUE)).addGroup(GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup().addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE).addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup().addComponent(labelRemainingBoats, GroupLayout.PREFERRED_SIZE, 79, GroupLayout.PREFERRED_SIZE).addContainerGap()).addGroup(GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup().addComponent(labelAvailableBoats).addGap(36, 36, 36)))));
+        jPanel1Layout.setVerticalGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(jPanel1Layout.createSequentialGroup().addComponent(labelAvailableBoats, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE).addGap(11, 11, 11).addComponent(labelRemainingBoats).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(btnAddBoat4Size).addComponent(lblNumberBoat4Size, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)).addGap(29, 29, 29).addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(btnAddBoat3Size).addComponent(lblNumberBoat3Size, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)).addGap(26, 26, 26).addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(lblNumberBoat2Size, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE).addComponent(btnAddBoat2Size)).addGap(18, 18, 18).addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(lblNumberBoat1Size, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE).addComponent(btnAddBoat1Size)).addContainerGap(32, Short.MAX_VALUE)));
         jPanel1Layout.setHorizontalGroup(
                 jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel1Layout.createSequentialGroup()
@@ -193,10 +204,10 @@ public class BoatTable extends JFrame implements Observer {
                                 .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                         .addGroup(GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                                .addComponent(jLabel5, GroupLayout.PREFERRED_SIZE, 79, GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(labelRemainingBoats, GroupLayout.PREFERRED_SIZE, 79, GroupLayout.PREFERRED_SIZE)
                                                 .addContainerGap())
                                         .addGroup(GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                                .addComponent(jLabel6)
+                                                .addComponent(labelAvailableBoats)
                                                 .addGap(36, 36, 36))
                                         .addGroup(GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                                 .addComponent(btnStart)
@@ -205,9 +216,9 @@ public class BoatTable extends JFrame implements Observer {
         jPanel1Layout.setVerticalGroup(
                 jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel6, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
+                                .addComponent(labelAvailableBoats, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
                                 .addGap(11, 11, 11)
-                                .addComponent(jLabel5)
+                                .addComponent(labelRemainingBoats)
                                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                         .addComponent(btnAddBoat4Size)
@@ -229,9 +240,11 @@ public class BoatTable extends JFrame implements Observer {
                                 .addContainerGap())
         );
 
-        backgroundPanel.add(jPanel1);
+        panelSelectBoats.setBounds(450, 100, 180, 300);
+        backgroundPanel.add(panelSelectBoats);
         backgroundPanel.add(btnSearchMatch);
         backgroundPanel.add(opponentBoard);
+
         GroupLayout layout = new GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING).addComponent(backgroundPanel, GroupLayout.PREFERRED_SIZE, 700, GroupLayout.PREFERRED_SIZE));
@@ -271,7 +284,6 @@ public class BoatTable extends JFrame implements Observer {
 
     public void fillUserBoardStart() {
         userBoard.setPreferredSize(new Dimension(350, 350));
-        userBoard.setLocation((backgroundPanel.getWidth() / 2) - (backgroundPanel.getWidth() / 2), (backgroundPanel.getHeight() / 2) - (backgroundPanel.getHeight() / 2));
         for (int i = 1; i <= BoardWidth; i++) {
             for (int j = 1; j <= BoardWidth; j++) {
                 Cell currentPanel = new Cell((j + "," + i), boardManager, this);
@@ -289,7 +301,6 @@ public class BoatTable extends JFrame implements Observer {
 
     public void fillOpponentBoardStart() {
         opponentBoard.setPreferredSize(new Dimension(350, 350));
-        opponentBoard.setLocation((backgroundPanel.getWidth() / 2) - (backgroundPanel.getWidth() / 2), (backgroundPanel.getHeight() / 2) - (backgroundPanel.getHeight() / 2));
         for (int i = 1; i <= BoardWidth; i++) {
             for (int j = 1; j <= BoardWidth; j++) {
                 Cell currentPanel = new Cell((j + "," + i), boardManager, this);
@@ -330,10 +341,10 @@ public class BoatTable extends JFrame implements Observer {
     }
 
     /**
-     * Pinta incialmente cada celda
+     * Pinta inicialmente cada celda
      */
 
-    public void fillBoardOponent(String oponentMap) {
+    public void fillBoardOpponent(String opponentMap) {
         String prueba = "";
         int global = 0;
         opponentBoard.setPreferredSize(new Dimension(350, 350));
@@ -341,9 +352,9 @@ public class BoatTable extends JFrame implements Observer {
         for (int i = 0; i < BoardWidth; i++) {
             for (int j = 0; j < BoardWidth; j++) {
                 Cell currentPanel = new Cell((j + 1) + "," + (i + 1), boardManager, this);
-                char currentSimbol = oponentMap.charAt((i + j));
+                char currentSimbol = opponentMap.charAt((i + j));
                 prueba += currentSimbol;
-                if (oponentMap.charAt(global) == Status.CB.getValue()) {
+                if (opponentMap.charAt(global) == Status.CB.getValue()) {
                     currentPanel.getPanel().setBackground(Color.GREEN);
                     currentPanel.setPermanent(true);
                 } else {
@@ -355,7 +366,7 @@ public class BoatTable extends JFrame implements Observer {
             }
 
         }
-        System.out.println("Original 1: " + oponentMap);
+        System.out.println("Original 1: " + opponentMap);
         System.out.println("Original 2: " + prueba);
     }
 
