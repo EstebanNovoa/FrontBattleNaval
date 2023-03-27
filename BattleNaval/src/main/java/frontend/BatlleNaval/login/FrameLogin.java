@@ -31,8 +31,8 @@ public class FrameLogin extends JFrame implements Texts {
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(new Dimension(550, 300));
-        init();
         setVisible(true);
+        init();
     }
 
     private void init() {

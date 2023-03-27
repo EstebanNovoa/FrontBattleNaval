@@ -12,7 +12,6 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
-import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
 import static frontend.BatlleNaval.Actions.SEARCH_MATCH;
@@ -20,7 +19,7 @@ import static frontend.BatlleNaval.Actions.SET_TIME;
 
 public class Controller extends WindowAdapter implements ActionListener {
 
-    private final FrameLogin frameLogin;
+    private FrameLogin frameLogin;
     private BoardManager boardManager;
     private static final int PORT = 23370;
     private static final String HOST = "localhost";
@@ -32,8 +31,8 @@ public class Controller extends WindowAdapter implements ActionListener {
 
 
     public Controller() {
-//      this.boardManager = new BoardManager();
         this.frameLogin = new FrameLogin(this, this, MyColors.generateRandomColor(new Color(212, 104, 104)));
+
     }
 
     @Override
@@ -46,16 +45,12 @@ public class Controller extends WindowAdapter implements ActionListener {
         String actionCommand = e.getActionCommand();
         System.out.println(actionCommand);
         switch (actionCommand) {
-            case Actions.BTN_PLAY:
-                playGame();
-                break;
-            case SEARCH_MATCH:
+            case Actions.BTN_PLAY -> playGame();
+            case SEARCH_MATCH -> {
                 System.out.println("SEARCH MATCH");
                 this.startMatch(this.frameLogin.getNamePlayer().trim());
-                break;
-            default:
-                System.out.println("Default");
-                break;
+            }
+            default -> System.out.println("Default");
         }
     }
 
@@ -69,18 +64,18 @@ public class Controller extends WindowAdapter implements ActionListener {
             System.out.println(Actions.BTN_PLAY);
             System.out.println(namePlayer);
             this.frameLogin.dispose();
-            this.boardManager = new BoardManager(namePlayer, this);
             //FOR TESTING
             try {
                 socket = new Socket(HOST, PORT);
                 if (socket.isConnected()) {
+                    this.boardManager = new BoardManager(namePlayer, this);
                     System.out.println("CREANDO SOCKET");
                     input = new DataInputStream(socket.getInputStream());
                     output = new DataOutputStream(socket.getOutputStream());
                     listener = new ServerListener(this);
                 }
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                Output.showErrorMessage("Servidor no disponible");
             }
             //FOR TESTING
         } else {
@@ -97,7 +92,6 @@ public class Controller extends WindowAdapter implements ActionListener {
             System.out.println("TABLERO OPONENTE: " + getInputString());
             System.out.println("TURNO: " + getInputString());
             listener.start();
-//            guiManager.fillBoard(getInputString());
             frameLogin.hideDialogWaitMatch();
         }
     }
@@ -148,7 +142,7 @@ public class Controller extends WindowAdapter implements ActionListener {
 
     public void serverAction(String action) {
         System.out.println("SERVER ACTION: " + action);
-        switch (action){
+        switch (action) {
             case SET_TIME -> setTime(getInputString());
             default -> System.out.println("COMANDO DESCONOCIDO");
         }

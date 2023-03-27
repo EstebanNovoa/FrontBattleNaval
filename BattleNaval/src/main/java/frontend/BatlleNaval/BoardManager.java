@@ -14,12 +14,21 @@ public class BoardManager implements Observer {
     private BoatTable boatTable;
     private ActionListener actionListener;
 
-    public BoardManager(String namePlayer, ActionListener actionListener) {
+    public BoardManager(ActionListener actionListener) {
         boatTable = new BoatTable(this, actionListener);
         this.actionListener = actionListener;
         boatTable.setVisible(true);
-        this.setNamePlayer(namePlayer);
+//        this.setNamePlayer(namePlayer);
     }
+
+    public BoardManager(String namePlayer, ActionListener actionListener) {
+        boatTable = new BoatTable(this, actionListener);
+        this.actionListener = actionListener;
+        this.setNamePlayer(namePlayer);
+        boatTable.setVisible(true);
+//        this.setNamePlayer(namePlayer);
+    }
+
 
     public void addBoardOpponent() {
         this.boatTable.addBoardOpponent();
