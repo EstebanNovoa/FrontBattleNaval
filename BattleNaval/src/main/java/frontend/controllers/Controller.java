@@ -1,9 +1,6 @@
 package frontend.controllers;
 
-import frontend.BatlleNaval.Actions;
-import frontend.BatlleNaval.BoardManager;
-import frontend.BatlleNaval.MyColors;
-import frontend.BatlleNaval.Output;
+import frontend.BatlleNaval.*;
 import frontend.BatlleNaval.login.FrameLogin;
 
 import java.awt.*;
@@ -114,7 +111,7 @@ public class Controller extends WindowAdapter implements ActionListener {
         try {
             result = input.readUTF();
         } catch (IOException e) {
-//            Output.showErrorMessage(ERROR_NOT_READ);
+            Output.showErrorMessage(Texts.ERROR_NOT_READ);
         }
         return result;
     }
@@ -123,8 +120,11 @@ public class Controller extends WindowAdapter implements ActionListener {
         try {
             output.writeUTF(action);
         } catch (IOException e) {
-//            Output.showErrorMessage(ERROR_NOT_WRITE);
+            Output.showErrorMessage(Texts.ERROR_NOT_WRITE);
         }
     }
 
+    private void setTime(String time) {
+        this.boardManager.setTime(time);
+    }
 }

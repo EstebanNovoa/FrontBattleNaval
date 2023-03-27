@@ -25,6 +25,10 @@ public class BoardManager implements Observer {
         this.boatTable.addBoardOpponent();
     }
 
+    public void setTime(String time) {
+        this.boatTable.setTime(time);
+    }
+
     public JPanel getBoard() {
         return this.boatTable.getUserBoard();
     }

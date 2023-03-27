@@ -7,4 +7,6 @@ public interface Texts {
 
     String BTN_SEARCH_MATCH = "Iniciar";
     String BTN_INIT_MATCH = "Empezar";
+    String ERROR_NOT_WRITE = "Error de escritura";
+    String ERROR_NOT_READ = "Error de lectura";
 }

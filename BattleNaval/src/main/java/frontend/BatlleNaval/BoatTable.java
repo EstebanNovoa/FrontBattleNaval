@@ -28,6 +28,8 @@ public class BoatTable extends JFrame implements Observer {
     private JLabel labelRemainingBoats;
     private JLabel labelAvailableBoats;
 
+    private JLabel labelTime;
+    private JTextField textFieldTime;
     private JLabel lblNumberBoat1Size;
     private JLabel lblNumberBoat2Size;
     private JLabel lblNumberBoat3Size;
@@ -42,7 +44,7 @@ public class BoatTable extends JFrame implements Observer {
         initComponents(actionListener);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
-        this.setSize(675, 1000);
+        this.setSize(1100, 550);
         userBoard.setLayout(new GridLayout(BoardWidth, BoardWidth));
         opponentBoard.setLayout(new GridLayout(BoardWidth, BoardWidth));
         this.boardManager = boardManager;
@@ -80,7 +82,7 @@ public class BoatTable extends JFrame implements Observer {
 
         backgroundPanel = new JPanel();
         backgroundPanel.setLayout(null);
-        backgroundPanel.setBounds(0, 0, 500, 1000);
+        backgroundPanel.setBounds(10, 10, 1300, 500);
         labelTextTittle = new JLabel();
         labelNameOpponent = new JLabel("Sin oponente");
         userBoard = new JPanel();
@@ -97,10 +99,13 @@ public class BoatTable extends JFrame implements Observer {
         lblNumberBoat1Size = new JLabel();
         labelRemainingBoats = new JLabel();
         labelAvailableBoats = new JLabel();
-
+        labelTime = new JLabel("Tiempo restante: ");
+        labelTime.setFont(new Font("Segoe UI", Font.PLAIN, 18));
+        textFieldTime = new JTextField();
+        textFieldTime.setEditable(false);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        backgroundPanel.setBackground(new Color(255, 102, 102));
+        backgroundPanel.setBackground(MyColors.generateRandomColor(new Color(255, 148, 148)));
 
         labelTextTittle.setFont(new Font("SEGOE", Font.ITALIC + Font.BOLD, 24)); // NOI18N
         labelTextTittle.setForeground(new Color(255, 255, 255));
@@ -109,9 +114,9 @@ public class BoatTable extends JFrame implements Observer {
         labelNameOpponent.setForeground(new Color(255, 255, 255));
         labelNameOpponent.setHorizontalAlignment(SwingConstants.LEFT);
         labelTextTittle.setText("Bienvenido a Batalla Naval: " + namePlayer);
-        labelTextTittle.setBounds(0, 15, 675, 20);
+        labelTextTittle.setBounds(10, 10, 400, 20);
 
-        labelNameOpponent.setBounds(15, 490, 675, 25);
+        labelNameOpponent.setBounds(670, 10, 400, 25);
 
         backgroundPanel.add(labelTextTittle);
         backgroundPanel.add(labelNameOpponent);
@@ -120,10 +125,16 @@ public class BoatTable extends JFrame implements Observer {
         opponentBoard.setBackground(new Color(255, 255, 255));
 
         userBoard.setBounds(20, 70, 400, 400);
-        opponentBoard.setBounds(20, 540, 400, 400);
+        opponentBoard.setBounds(660, 70, 400, 400);
 
+        labelTime.setBounds(30, 478, 150, 25);
+
+        textFieldTime.setBounds(170, 480, 40, 25);
+
+        backgroundPanel.add(labelTime);
         backgroundPanel.add(userBoard);
         backgroundPanel.add(opponentBoard);
+        backgroundPanel.add(textFieldTime);
 
         panelSelectBoats.setBackground(new Color(255, 255, 255));
 
@@ -247,9 +258,8 @@ public class BoatTable extends JFrame implements Observer {
 
         GroupLayout layout = new GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING).addComponent(backgroundPanel, GroupLayout.PREFERRED_SIZE, 700, GroupLayout.PREFERRED_SIZE));
-        layout.setVerticalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING).addComponent(backgroundPanel, GroupLayout.PREFERRED_SIZE, 1000, GroupLayout.PREFERRED_SIZE));
-
+        layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING).addComponent(backgroundPanel, GroupLayout.PREFERRED_SIZE, 1100, GroupLayout.PREFERRED_SIZE));
+        layout.setVerticalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING).addComponent(backgroundPanel, GroupLayout.PREFERRED_SIZE, 550, GroupLayout.PREFERRED_SIZE));
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -419,6 +429,10 @@ public class BoatTable extends JFrame implements Observer {
             }
         } catch (Exception e) {
         }
+    }
+
+    public void setTime(String time) {
+        this.textFieldTime.setText(time);
     }
 
 }
