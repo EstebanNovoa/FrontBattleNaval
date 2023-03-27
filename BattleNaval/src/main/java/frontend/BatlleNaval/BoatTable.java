@@ -185,12 +185,8 @@ public class BoatTable extends JFrame implements Observer {
 
         this.btnStart = new JButton();
         btnStart.setText(Texts.BTN_INIT_MATCH);
-        btnStart.addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent evt) {
-                btnStartMouseClicked(evt);
-            }
-        });
-
+        btnStart.setActionCommand(Actions.SEARCH_MATCH);
+        btnStart.addActionListener(actionListener);
         GroupLayout jPanel1Layout = new GroupLayout(panelSelectBoats);
         panelSelectBoats.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(jPanel1Layout.createSequentialGroup().addGap(19, 19, 19).addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.TRAILING).addComponent(btnAddBoat2Size).addComponent(btnAddBoat1Size).addComponent(btnAddBoat3Size).addComponent(btnAddBoat4Size)).addGap(18, 18, 18).addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING).addComponent(lblNumberBoat2Size, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE).addComponent(lblNumberBoat1Size, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE).addComponent(lblNumberBoat4Size, GroupLayout.PREFERRED_SIZE, 46, GroupLayout.PREFERRED_SIZE).addComponent(lblNumberBoat3Size, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)).addContainerGap(15, Short.MAX_VALUE)).addGroup(GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup().addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE).addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup().addComponent(labelRemainingBoats, GroupLayout.PREFERRED_SIZE, 79, GroupLayout.PREFERRED_SIZE).addContainerGap()).addGroup(GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup().addComponent(labelAvailableBoats).addGap(36, 36, 36)))));
@@ -303,11 +299,6 @@ public class BoatTable extends JFrame implements Observer {
         }
 
     }
-
-    private void btnStartMouseClicked(MouseEvent evt) {//GEN-FIRST:event_btnStartMouseClicked
-        System.out.println(CellManager.getMyCellManager().generateMapBoats());
-    }//GEN-LAST:event_btnStartMouseClicked
-
 
     public void fillOpponentBoardStart() {
         opponentBoard.setPreferredSize(new Dimension(350, 350));

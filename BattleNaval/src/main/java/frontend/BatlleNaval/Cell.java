@@ -70,7 +70,7 @@ public class Cell extends Observable {
         panel.addMouseListener(new MouseAdapter() {
                                    @Override
                                    public void mouseEntered(MouseEvent e) {
-                                       panel.setBackground(Color.GREEN);
+                                       panel.setBackground(Color.BLUE);
                                        setChanged();
                                    }
 
@@ -86,11 +86,8 @@ public class Cell extends Observable {
                                    public void mouseClicked(MouseEvent e) {
                                        setChanged();
                                        notifyObservers(Cell.this);
-
                                    }
                                }
-
-
         );
     }
 

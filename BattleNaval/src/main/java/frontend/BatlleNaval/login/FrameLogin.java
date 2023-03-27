@@ -1,5 +1,6 @@
 package frontend.BatlleNaval.login;
 
+import com.formdev.flatlaf.intellijthemes.FlatCyanLightIJTheme;
 import frontend.BatlleNaval.Actions;
 import frontend.BatlleNaval.Texts;
 
@@ -25,6 +26,7 @@ public class FrameLogin extends JFrame implements Texts {
         super("Batalla Naval");
         this.actionListener = actionListener;
         this.windowListener = windowListener;
+        FlatCyanLightIJTheme.setup();
         this.getContentPane().setBackground(color);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -73,5 +75,21 @@ public class FrameLogin extends JFrame implements Texts {
         add(this.fieldGetName);
         this.btnAcceptLogin.setBounds(260, 205, 270, 50);
         add(this.btnAcceptLogin);
+    }
+
+    /**
+     * Muestra el dialogo de esperar partida
+     *
+     */
+    public void showDialogWaitMatch() {
+        this.dialogWaitMatch.setLocationRelativeTo(null);
+        dialogWaitMatch.setVisible(true);
+    }
+
+    /**
+     * Oculta el dialog de esperar partida
+     */
+    public void hideDialogWaitMatch() {
+        this.dialogWaitMatch.dispose();
     }
 }

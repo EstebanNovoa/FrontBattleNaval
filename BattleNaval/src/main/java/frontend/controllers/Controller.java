@@ -12,24 +12,28 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
+
+import static frontend.BatlleNaval.Actions.SEARCH_MATCH;
+import static frontend.BatlleNaval.Actions.SET_TIME;
 
 public class Controller extends WindowAdapter implements ActionListener {
 
     private final FrameLogin frameLogin;
     private BoardManager boardManager;
     private static final int PORT = 23370;
-    private static final String HOST = "186.114.217.181";
+    private static final String HOST = "localhost";
     private DataInputStream input;
     private DataOutputStream output;
     private Socket socket;
+    private ServerListener listener;
     private volatile boolean isWaiting;
 
 
     public Controller() {
-//        this.boardManager = new BoardManager();
+//      this.boardManager = new BoardManager();
         this.frameLogin = new FrameLogin(this, this, MyColors.generateRandomColor(new Color(212, 104, 104)));
-
     }
 
     @Override
@@ -45,8 +49,9 @@ public class Controller extends WindowAdapter implements ActionListener {
             case Actions.BTN_PLAY:
                 playGame();
                 break;
-            case Actions.SEARCH_MATCH:
-                this.searchMatch();
+            case SEARCH_MATCH:
+                System.out.println("SEARCH MATCH");
+                this.startMatch(this.frameLogin.getNamePlayer().trim());
                 break;
             default:
                 System.out.println("Default");
@@ -60,11 +65,24 @@ public class Controller extends WindowAdapter implements ActionListener {
 
     private void playGame() {
         String namePlayer = this.frameLogin.getNamePlayer().trim();
-        System.out.println(Actions.BTN_PLAY);
-        System.out.println(namePlayer);
         if (!namePlayer.isEmpty()) {
+            System.out.println(Actions.BTN_PLAY);
+            System.out.println(namePlayer);
             this.frameLogin.dispose();
             this.boardManager = new BoardManager(namePlayer, this);
+            //FOR TESTING
+            try {
+                socket = new Socket(HOST, PORT);
+                if (socket.isConnected()) {
+                    System.out.println("CREANDO SOCKET");
+                    input = new DataInputStream(socket.getInputStream());
+                    output = new DataOutputStream(socket.getOutputStream());
+                    listener = new ServerListener(this);
+                }
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            //FOR TESTING
         } else {
             Output.showInfoMessage("Por favor ingrese su nombre de usuario");
         }
@@ -73,11 +91,15 @@ public class Controller extends WindowAdapter implements ActionListener {
 
     private synchronized void initMatch() {
         isWaiting = false;
-//        if (Objects.equals(getInputString(), Actions.START_MATCH)) {
+        if (getInputString().equals(Actions.START_MATCH)) {
+            System.out.println("Empezando partida");
+            System.out.println("NOMBRE OPONENTE: " + getInputString());
+            System.out.println("TABLERO OPONENTE: " + getInputString());
+            System.out.println("TURNO: " + getInputString());
+            listener.start();
 //            guiManager.fillBoard(getInputString());
-//            panelLogin.hideDialogWaitMatch();
-//            guiManager.setTextGames(0);
-//        }
+            frameLogin.hideDialogWaitMatch();
+        }
     }
 
     private void waitMatch() {
@@ -97,16 +119,16 @@ public class Controller extends WindowAdapter implements ActionListener {
     }
 
     private void startMatch(String name) {
-//        this.writeUTF(SEARCH_MATCH);
+        this.writeUTF(SEARCH_MATCH);
         this.writeUTF(name);
-        this.frameLogin.setVisible(false);
-//        this.boardManager.setVisible(true);
+        String boardPattern = CellManager.getMyCellManager().generateMapBoats();
+        System.out.println("BOARD PATTERN: " + boardPattern);
+        this.writeUTF(boardPattern);
         this.waitMatch();
-//        panelLogin.showDialogWaitMatch(guiManager);
-//        this.guiManager.setNamePlayer(panelLogin.getName());
+        frameLogin.showDialogWaitMatch();
     }
 
-    private String getInputString() {
+    public String getInputString() {
         String result = null;
         try {
             result = input.readUTF();
@@ -124,7 +146,19 @@ public class Controller extends WindowAdapter implements ActionListener {
         }
     }
 
+    public void serverAction(String action) {
+        System.out.println("SERVER ACTION: " + action);
+        switch (action){
+            case SET_TIME -> setTime(getInputString());
+            default -> System.out.println("COMANDO DESCONOCIDO");
+        }
+    }
+
     private void setTime(String time) {
         this.boardManager.setTime(time);
+    }
+
+    public Socket getSocket() {
+        return socket;
     }
 }
