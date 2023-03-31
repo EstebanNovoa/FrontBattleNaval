@@ -4,6 +4,7 @@ package frontend.BatlleNaval;
 import java.awt.event.ActionEvent;
 import javax.swing.*;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -27,6 +28,7 @@ public class BoardManager implements Observer {
         this.actionListener = actionListener;
         this.setNamePlayer(namePlayer);
         boatTable.setVisible(true);
+        
 //        this.setNamePlayer(namePlayer);
     }
 

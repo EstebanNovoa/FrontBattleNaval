@@ -95,33 +95,50 @@ public class CellManager implements Observer {
         }
         System.out.println("Cooordenada que devuelve null es: " + x + " - " + y);
         return null;
+    
+    }
+    
+    
+    
+    public boolean isFill(int x, int y) {
+        String nameToFind = x + "," + y;
+       for (Cell currenCell : cellList) {
+            if (currenCell.getPanel().getName().equals(nameToFind)) {
+                return currenCell.isPermanent();
+            }
+        }
+        return false;
     }
 
     @Override
     public void update(Observable currentPanel, Object arg) {
         try {
             if (currentPanel instanceof Cell) {
+                Cell currentCell = (Cell) currentPanel;
+                String[] coordenate = currentCell.getPanel().getName().split(",");
+                int x = Integer.parseInt(coordenate[0]);
+                int y = Integer.parseInt(coordenate[1]);
                 switch (Mouse.getMyMouse().getComponentClicked().getName()) {
                     case "btnAddBoat4Size":
-                        if (boatAvaliable4 > 0) {
+                        if (boatAvaliable4 > 0 && !isFill(x,y)) {
                             setBoat((Cell) currentPanel, 4);
                             boatAvaliable4--;
                         }
                         break;
                     case "btnAddBoat3Size":
-                        if (boatAvaliable3 >0) {
+                        if (boatAvaliable3 > 0 && !isFill(x,y)) {
                             setBoat((Cell) currentPanel, 3);
                             boatAvaliable3--;
                         }
                         break;
                     case "btnAddBoat2Size":
-                        if (boatAvaliable2 >0) {
+                        if (boatAvaliable2 >0 && !isFill(x,y)) {
                             setBoat((Cell) currentPanel, 2);
                             boatAvaliable2--;
                         }
                         break;
                     case "btnAddBoat1Size":
-                        if (boatAvaliable1>0) {
+                        if (boatAvaliable1>0 && !isFill(x,y)) {
                             setBoat((Cell) currentPanel, 1);
                             boatAvaliable1--;
                         }

@@ -381,28 +381,32 @@ public class BoatTable extends JFrame implements Observer {
     public void update(Observable currentPanel, Object arg) {
         try {
             if (currentPanel instanceof Cell) {
+                Cell currentCell = (Cell) currentPanel;
+                String[] coordenate = currentCell.getPanel().getName().split(",");
+                int x = Integer.parseInt(coordenate[0]);
+                int y = Integer.parseInt(coordenate[1]);
                 switch (Mouse.getMyMouse().getComponentClicked().getName()) {
                     case "btnAddBoat4Size" -> {
                         int numberBoats4 = CellManager.getMyCellManager().getBoatAvaliable4();
-                        if (numberBoats4 > 0 ) {
+                        if (numberBoats4 > 0 && !CellManager.getMyCellManager().isFill(x,y)) {
                             lblNumberBoat4Size.setText(Integer.toString(numberBoats4 -1));
                         } 
                     }
                     case "btnAddBoat3Size" -> {
                         int numberBoats3 = CellManager.getMyCellManager().getBoatAvaliable3();
-                        if (numberBoats3 > 0) {
+                        if (numberBoats3 > 0 && !CellManager.getMyCellManager().isFill(x,y)) {
                             lblNumberBoat3Size.setText(Integer.toString(numberBoats3 -1));
                         }
                     }
                     case "btnAddBoat2Size" -> {
                         int numberBoats2 = CellManager.getMyCellManager().getBoatAvaliable2();
-                        if (numberBoats2 > 0) {
+                        if (numberBoats2 > 0 && !CellManager.getMyCellManager().isFill(x,y)) {
                             lblNumberBoat2Size.setText(Integer.toString(numberBoats2 -1));
                         }
                     }
                     case "btnAddBoat1Size" -> {
                         int numberBoats1 = CellManager.getMyCellManager().getBoatAvaliable1();
-                        if (numberBoats1 > 0) {
+                        if (numberBoats1 > 0 && !CellManager.getMyCellManager().isFill(x,y)) {
                             lblNumberBoat1Size.setText(Integer.toString(numberBoats1 -1 ));
                         }
                     }
