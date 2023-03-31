@@ -24,6 +24,7 @@ public class Cell extends Observable {
         super();
         panel = new JPanel();
         this.addObserver(CellManager.getMyCellManager());
+        this.addObserver(CellManagerOpponent.getMyCellManagerOpponent());
         this.addObserver(boardManager);
         this.addObserver(boatTable);
         mouseActions(panel);
@@ -65,6 +66,14 @@ public class Cell extends Observable {
         this.status = status;
     }
 
+    public Status getStatus() {
+        return status;
+    }
+
+    
+
+
+    
 
     public void mouseActions(JPanel panel) {
         panel.addMouseListener(new MouseAdapter() {

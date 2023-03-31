@@ -27,7 +27,6 @@ public class BoatTable extends JFrame implements Observer {
     private JLabel labelNameOpponent;
     private JLabel labelRemainingBoats;
     private JLabel labelAvailableBoats;
-
     private JLabel labelTime;
     private JTextField textFieldTime;
     private JLabel lblNumberBoat1Size;
@@ -38,6 +37,7 @@ public class BoatTable extends JFrame implements Observer {
     private JPanel panelSelectBoats;
     private JPanel userBoard;
     private JPanel opponentBoard;
+    private CellManagerOpponent cellManagerOponent;
 
 
     public BoatTable(BoardManager boardManager, ActionListener actionListener) {
@@ -56,8 +56,9 @@ public class BoatTable extends JFrame implements Observer {
         btnAddBoat3Size.setName("btnAddBoat3Size");
         btnAddBoat2Size.setName("btnAddBoat2Size");
         btnAddBoat1Size.setName("btnAddBoat1Size");
+        cellManagerOponent = CellManagerOpponent.getMyCellManagerOpponent();
         fillUserBoardStart();
-        fillOpponentBoardStart();
+        fillBoardOpponent("--...---............----.--..................---.-.---..........----...--.........----..............");
     }
 
     public void setNamePlayer(String namePlayer) {
@@ -300,17 +301,17 @@ public class BoatTable extends JFrame implements Observer {
 
     }
 
-    public void fillOpponentBoardStart() {
-        opponentBoard.setPreferredSize(new Dimension(350, 350));
-        for (int i = 1; i <= BoardWidth; i++) {
-            for (int j = 1; j <= BoardWidth; j++) {
-                Cell currentPanel = new Cell((j + "," + i), boardManager, this);
-                CellManager.getMyCellManager().getCellList().add(currentPanel);
-                opponentBoard.add(currentPanel.getPanel());
-            }
-        }
-
-    }
+//    public void fillOpponentBoardStart() {
+//        opponentBoard.setPreferredSize(new Dimension(350, 350));
+//        for (int i = 1; i <= BoardWidth; i++) {
+//            for (int j = 1; j <= BoardWidth; j++) {
+//                Cell currentPanel = new Cell((j + "," + i), boardManager, this);
+//                cellManagerOponent.getCellList().add(currentPanel);
+//                opponentBoard.add(currentPanel.getPanel());
+//            }
+//        }
+//
+//    }
 
     /**
      * Repinta tomando en cuenta el estado de cada celda
@@ -328,18 +329,18 @@ public class BoatTable extends JFrame implements Observer {
         }
     }
 
-    public void fillOpponentBoardRepaint() {
-        this.repaint();
-        opponentBoard.removeAll();
-        opponentBoard.revalidate();
-        for (int i = 1; i <= BoardWidth; i++) {
-            for (int j = 1; j <= BoardWidth; j++) {
-                Cell currentPanel = CellManager.getMyCellManager().search(i, j);
-                CellManager.getMyCellManager().getCellList().add(currentPanel);
-                opponentBoard.add(currentPanel.getPanel());
-            }
-        }
-    }
+//    public void fillOpponentBoardRepaint() {
+//        this.repaint();
+//        opponentBoard.removeAll();
+//        opponentBoard.revalidate();
+//        for (int i = 1; i <= BoardWidth; i++) {
+//            for (int j = 1; j <= BoardWidth; j++) {
+//                Cell currentPanel = cellManagerOponent.search(i, j);
+//                cellManagerOponent.getCellList().add(currentPanel);
+//                opponentBoard.add(currentPanel.getPanel());
+//            }
+//        }
+//    }
 
     /**
      * Pinta inicialmente cada celda
@@ -349,17 +350,15 @@ public class BoatTable extends JFrame implements Observer {
         String prueba = "";
         int global = 0;
         opponentBoard.setPreferredSize(new Dimension(350, 350));
-        opponentBoard.setLocation((backgroundPanel.getWidth() / 2) - (backgroundPanel.getWidth() / 2), (backgroundPanel.getHeight() / 2) - (backgroundPanel.getHeight() / 2));
         for (int i = 0; i < BoardWidth; i++) {
             for (int j = 0; j < BoardWidth; j++) {
                 Cell currentPanel = new Cell((j + 1) + "," + (i + 1), boardManager, this);
                 char currentSimbol = opponentMap.charAt((i + j));
                 prueba += currentSimbol;
                 if (opponentMap.charAt(global) == Status.CB.getValue()) {
-                    currentPanel.getPanel().setBackground(Color.GREEN);
-                    currentPanel.setPermanent(true);
+                    currentPanel.setStatus(Status.CB);
                 } else {
-                    currentPanel.setPermanent(false);
+                    currentPanel.setStatus(Status.CBS);
                 }
                 global++;
                 CellManager.getMyCellManager().getCellList().add(currentPanel);
@@ -367,8 +366,7 @@ public class BoatTable extends JFrame implements Observer {
             }
 
         }
-        System.out.println("Original 1: " + opponentMap);
-        System.out.println("Original 2: " + prueba);
+
     }
 
 
