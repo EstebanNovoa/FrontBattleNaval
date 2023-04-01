@@ -107,9 +107,17 @@ public class CellManagerOpponent implements Observer {
     public void update(Observable currentPanel, Object arg) {
         try {
             if (currentPanel instanceof Cell) {
-                if (((Cell) currentPanel).getStatus().equals(Status.CB) && ((Cell) currentPanel).isIsOpponent() == true) {
-                    ((Cell) currentPanel).getPanel().setBackground(Color.red);
-                    ((Cell) currentPanel).setPermanent(true);
+                Cell currentCell = (Cell) currentPanel;
+                if (currentCell.getStatus().equals(Status.CB) && currentCell.isIsOpponent() == true) {                    
+                    currentCell.getPanel().setBackground(Color.red);
+                    currentCell.setPermanent(true);
+                    currentCell.setStatus(Status.CBD);
+                }else if (currentCell.getStatus().equals(Status.CBS) && currentCell.isIsOpponent() == true) {
+                    currentCell.getPanel().setBackground(Color.YELLOW);
+                    currentCell.setPermanent(true);
+                    currentCell.setStatus(Status.CD);
+                }else{
+                    
                 }
             }
         } catch (Exception e) {
@@ -117,9 +125,6 @@ public class CellManagerOpponent implements Observer {
         }
     }
     
-    
-
-
     /**
      * Meotdo de prueba
      */
@@ -141,13 +146,17 @@ public class CellManagerOpponent implements Observer {
         String map = "";
         for (int i = 1; i <= 10; i++) {
             for (int j = 1; j <= 10; j++) {
-                if (search(i, j).isPermanent()) {
-                    map += "-";
-                } else {
-                    map += ".";
+                Cell currentCell = this.search(i, j);
+                if (currentCell.getStatus().equals(Status.CB)) {
+                    map += Status.CB.getValue();
+                }else if (currentCell.getStatus().equals(Status.CBD)) {
+                    map += Status.CBD.getValue();
+                }else if (currentCell.getStatus().equals(Status.CBS)) {
+                    map += Status.CBS.getValue();
+                }else if (currentCell.getStatus().equals(Status.CD)) {
+                    map += Status.CD.getValue();
                 }
-                System.out.println("Coordenada: " + i + " , " + j + " \nSe agrego, posicion actual: " + map.length());
-
+              //  System.out.println("Coordenada: " + i + " , " + j + " \nSe agrego, posicion actual: " + map.length());
             }
         }
         return map;

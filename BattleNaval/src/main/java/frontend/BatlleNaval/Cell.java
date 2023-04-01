@@ -111,9 +111,12 @@ public class Cell extends Observable {
                         setChanged();
                         notifyObservers(Cell.this);
                     }
-                }else{
+                }else {
+                    if (isBlocked) {
                         setChanged();
                         notifyObservers(Cell.this);
+                    }
+                        
                 }
                 
             }
