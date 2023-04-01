@@ -2,10 +2,7 @@ package frontend.BatlleNaval;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -140,45 +137,18 @@ public class BoatTable extends JFrame implements Observer {
         panelSelectBoats.setBackground(new Color(255, 255, 255));
 
         btnAddBoat4Size.setText("Barco : 4");
-        btnAddBoat4Size.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                btnAddBoat4SizeActionPerformed(evt);
-            }
-        });
-
         btnAddBoat3Size.setText("Barco: 3");
-        btnAddBoat3Size.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                btnAddBoat3SizeActionPerformed(evt);
-            }
-        });
-
         btnAddBoat1Size.setText("Barco: 1");
-        btnAddBoat1Size.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                btnAddBoat1SizeActionPerformed(evt);
-            }
-        });
-
         btnAddBoat2Size.setText("Barco: 2");
-        btnAddBoat2Size.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                btnAddBoat2SizeActionPerformed(evt);
-            }
-        });
 
         lblNumberBoat2Size.setHorizontalAlignment(SwingConstants.CENTER);
-        lblNumberBoat2Size.setText("3");
-
+        lblNumberBoat2Size.setText(CellManager.getMyCellManager().getBoatAvaliable2()+"");
         lblNumberBoat4Size.setHorizontalAlignment(SwingConstants.CENTER);
-        lblNumberBoat4Size.setText("3");
-
+        lblNumberBoat4Size.setText(CellManager.getMyCellManager().getBoatAvaliable4()+"");
         lblNumberBoat3Size.setHorizontalAlignment(SwingConstants.CENTER);
-        lblNumberBoat3Size.setText("3");
-
+        lblNumberBoat3Size.setText(CellManager.getMyCellManager().getBoatAvaliable3()+"");
         lblNumberBoat1Size.setHorizontalAlignment(SwingConstants.CENTER);
-        lblNumberBoat1Size.setText("2");
-
+        lblNumberBoat1Size.setText(CellManager.getMyCellManager().getBoatAvaliable1()+"");
         labelRemainingBoats.setFont(new Font("Segoe UI", Font.PLAIN, 10)); // NOI18N
         labelRemainingBoats.setText("Barcos Restantes");
 
@@ -188,6 +158,7 @@ public class BoatTable extends JFrame implements Observer {
         btnStart.setText(Texts.BTN_INIT_MATCH);
         btnStart.setActionCommand(Actions.SEARCH_MATCH);
         btnStart.addActionListener(actionListener);
+        btnStart.setEnabled(false);//Evita que se inicie la partida sin posicionar barcos
         GroupLayout jPanel1Layout = new GroupLayout(panelSelectBoats);
         panelSelectBoats.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(jPanel1Layout.createSequentialGroup().addGap(19, 19, 19).addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.TRAILING).addComponent(btnAddBoat2Size).addComponent(btnAddBoat1Size).addComponent(btnAddBoat3Size).addComponent(btnAddBoat4Size)).addGap(18, 18, 18).addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING).addComponent(lblNumberBoat2Size, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE).addComponent(lblNumberBoat1Size, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE).addComponent(lblNumberBoat4Size, GroupLayout.PREFERRED_SIZE, 46, GroupLayout.PREFERRED_SIZE).addComponent(lblNumberBoat3Size, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)).addContainerGap(15, Short.MAX_VALUE)).addGroup(GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup().addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE).addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup().addComponent(labelRemainingBoats, GroupLayout.PREFERRED_SIZE, 79, GroupLayout.PREFERRED_SIZE).addContainerGap()).addGroup(GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup().addComponent(labelAvailableBoats).addGap(36, 36, 36)))));
@@ -260,26 +231,6 @@ public class BoatTable extends JFrame implements Observer {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void textMouseMoved(MouseEvent evt) {//GEN-FIRST:event_textMouseMoved
-        // TODO add your handling code here:
-    }//GEN-LAST:event_textMouseMoved
-
-    private void btnAddBoat4SizeActionPerformed(ActionEvent evt) {//GEN-FIRST:event_btnAddBoat4SizeActionPerformed
-
-    }//GEN-LAST:event_btnAddBoat4SizeActionPerformed
-
-    private void btnAddBoat3SizeActionPerformed(ActionEvent evt) {//GEN-FIRST:event_btnAddBoat3SizeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnAddBoat3SizeActionPerformed
-
-    private void btnAddBoat1SizeActionPerformed(ActionEvent evt) {//GEN-FIRST:event_btnAddBoat1SizeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnAddBoat1SizeActionPerformed
-
-    private void btnAddBoat2SizeActionPerformed(ActionEvent evt) {//GEN-FIRST:event_btnAddBoat2SizeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnAddBoat2SizeActionPerformed
-
     public JPanel getUserBoard() {
         return userBoard;
     }
@@ -298,7 +249,6 @@ public class BoatTable extends JFrame implements Observer {
                 userBoard.add(currentPanel.getPanel());
             }
         }
-
     }
 
 //    public void fillOpponentBoardStart() {
@@ -371,16 +321,9 @@ public class BoatTable extends JFrame implements Observer {
 
     }
 
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-
-
-    // End of variables declaration//GEN-END:variables
-
     @Override
     public void update(Observable currentPanel, Object arg) {
         try {
-            CellManager cellManager = CellManager.getMyCellManager();
             if (currentPanel instanceof Cell) {
                 Cell currentCell = (Cell) currentPanel;
                 String[] coordenate = currentCell.getPanel().getName().split(",");
@@ -388,36 +331,16 @@ public class BoatTable extends JFrame implements Observer {
                 int y = Integer.parseInt(coordenate[1]);
                 switch (Mouse.getMyMouse().getComponentClicked().getName()) {
                     case "btnAddBoat4Size" -> {
-                        int numberBoats4 = CellManager.getMyCellManager().getBoatAvaliable4();
-                        if (numberBoats4 > 0 && !cellManager.isFill(x, y, 4)) {
-                            if (cellManager.setBoat(currentCell,4) ) {
-                                lblNumberBoat4Size.setText(Integer.toString(numberBoats4 -1));
-                            }
-                        } 
+                        UpdateAddBoat(currentCell, x, y, 4);
                     }
                     case "btnAddBoat3Size" -> {
-                        int numberBoats3 = CellManager.getMyCellManager().getBoatAvaliable3();
-                        if (numberBoats3 > 0 && !cellManager.isFill(x, y, 3)) {
-                            if (cellManager.setBoat(currentCell,3)) {
-                                lblNumberBoat3Size.setText(Integer.toString(numberBoats3 -1));
-                            }
-                        } 
+                        UpdateAddBoat(currentCell, x, y, 3);
                     }
                     case "btnAddBoat2Size" -> {
-                        int numberBoats2 = CellManager.getMyCellManager().getBoatAvaliable2();
-                        if (numberBoats2 > 0 && !cellManager.isFill(x, y, 2)) {
-                            if (cellManager.setBoat(currentCell,2) ) {
-                                lblNumberBoat2Size.setText(Integer.toString(numberBoats2 -1));
-                            }
-                        } 
+                        UpdateAddBoat(currentCell, x, y, 2);
                     }
                     case "btnAddBoat1Size" -> {
-                        int numberBoats1 = CellManager.getMyCellManager().getBoatAvaliable1();
-                        if (numberBoats1 > 0 && !cellManager.isFill(x, y,1)) {
-                            if (cellManager.setBoat(currentCell,1)) {
-                                lblNumberBoat1Size.setText(Integer.toString(numberBoats1 -1));
-                            }
-                        } 
+                        UpdateAddBoat(currentCell, x, y, 1);
                     }
                     default -> throw new AssertionError();
                 }
@@ -425,6 +348,36 @@ public class BoatTable extends JFrame implements Observer {
             }
         } catch (Exception e) {
         }
+    }
+
+    /**
+     * Actualiza el panel de información de los barcos restantes
+     * @param currentCell celda actualizada
+     * @param x coordenada x de la celda
+     * @param y coordenada y de la celda
+     * @param boatSize tamaño del barco que se está agregando
+     */
+    private void UpdateAddBoat(Cell currentCell, int x, int y, int boatSize) {
+        CellManager cellManager = CellManager.getMyCellManager();
+        int numberBoats = CellManager.getMyCellManager().getBoatsAvailable(boatSize);
+        if (numberBoats > 0 && !cellManager.isFill(x, y, boatSize)) {
+            if (cellManager.setBoat(currentCell,boatSize)) {
+                getLblNumberBoatSize(boatSize).setText(Integer.toString(cellManager.getBoatsAvailable(boatSize)));
+                if (cellManager.getBoatsAvailable() == 0) btnStart.setEnabled(true);
+            }
+        }
+    }
+
+    private JLabel getLblNumberBoatSize(int boatSize){
+        JLabel label;
+        switch (boatSize){
+            case 1 -> label = lblNumberBoat1Size;
+            case 2 -> label = lblNumberBoat2Size;
+            case 3 -> label = lblNumberBoat3Size;
+            case 4 -> label = lblNumberBoat4Size;
+            default -> throw new IllegalArgumentException("No hay barcos de tamaño: " + boatSize);
+        }
+        return label;
     }
 
     public void setTime(String time) {

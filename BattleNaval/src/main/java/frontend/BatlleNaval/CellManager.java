@@ -144,4 +144,29 @@ public class CellManager  {
         }
         return map;
     }
+
+    /**
+     * Obtiene la cantidad de barcos restantes dependiendo del tamaño especificado
+     * @param boatSize tamaño del barco a buscar
+     * @return barcos restantes
+     */
+    public int getBoatsAvailable(int boatSize){
+        int number;
+        switch (boatSize){
+            case 1 -> number = getBoatAvaliable1();
+            case 2 -> number = getBoatAvaliable2();
+            case 3 -> number = getBoatAvaliable3();
+            case 4 -> number = getBoatAvaliable4();
+            default -> throw new IllegalArgumentException("No hay barcos de tamaño: " + boatSize);
+        }
+        return number;
+    }
+
+    /**
+     * Obtiene la cantidad total de barcos disponibles
+     * @return barcos disponibles
+     */
+    public int getBoatsAvailable(){
+        return boatAvaliable1 + boatAvaliable2 + boatAvaliable3 + boatAvaliable4;
+    }
 }
