@@ -19,11 +19,11 @@ public class Cell extends Observable {
     private boolean permanent = false;
     private JPanel panel;
     private boolean isOpponent;
+    private boolean isBlocked = true;
 
     public Cell(String name, BoardManager boardManager, BoatTable boatTable) {
         super();
         panel = new JPanel();
-        this.addObserver(CellManager.getMyCellManager());
         this.addObserver(CellManagerOpponent.getMyCellManagerOpponent());
         this.addObserver(boardManager);
         this.addObserver(boatTable);
@@ -106,8 +106,16 @@ public class Cell extends Observable {
 
             @Override
             public void mouseClicked(MouseEvent e) {
-                setChanged();
-                notifyObservers(Cell.this);
+                if (isOpponent) {
+                    if (!isBlocked) {
+                        setChanged();
+                        notifyObservers(Cell.this);
+                    }
+                }else{
+                        setChanged();
+                        notifyObservers(Cell.this);
+                }
+                
             }
         }
         );

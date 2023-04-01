@@ -380,6 +380,7 @@ public class BoatTable extends JFrame implements Observer {
     @Override
     public void update(Observable currentPanel, Object arg) {
         try {
+            CellManager cellManager = CellManager.getMyCellManager();
             if (currentPanel instanceof Cell) {
                 Cell currentCell = (Cell) currentPanel;
                 String[] coordenate = currentCell.getPanel().getName().split(",");
@@ -388,27 +389,35 @@ public class BoatTable extends JFrame implements Observer {
                 switch (Mouse.getMyMouse().getComponentClicked().getName()) {
                     case "btnAddBoat4Size" -> {
                         int numberBoats4 = CellManager.getMyCellManager().getBoatAvaliable4();
-                        if (numberBoats4 > 0 && !CellManager.getMyCellManager().isFill(x,y)) {
-                            lblNumberBoat4Size.setText(Integer.toString(numberBoats4 -1));
+                        if (numberBoats4 > 0 && !cellManager.isFill(x, y, 4)) {
+                            if (cellManager.setBoat(currentCell,4) ) {
+                                lblNumberBoat4Size.setText(Integer.toString(numberBoats4 -1));
+                            }
                         } 
                     }
                     case "btnAddBoat3Size" -> {
                         int numberBoats3 = CellManager.getMyCellManager().getBoatAvaliable3();
-                        if (numberBoats3 > 0 && !CellManager.getMyCellManager().isFill(x,y)) {
-                            lblNumberBoat3Size.setText(Integer.toString(numberBoats3 -1));
-                        }
+                        if (numberBoats3 > 0 && !cellManager.isFill(x, y, 3)) {
+                            if (cellManager.setBoat(currentCell,3)) {
+                                lblNumberBoat3Size.setText(Integer.toString(numberBoats3 -1));
+                            }
+                        } 
                     }
                     case "btnAddBoat2Size" -> {
                         int numberBoats2 = CellManager.getMyCellManager().getBoatAvaliable2();
-                        if (numberBoats2 > 0 && !CellManager.getMyCellManager().isFill(x,y)) {
-                            lblNumberBoat2Size.setText(Integer.toString(numberBoats2 -1));
-                        }
+                        if (numberBoats2 > 0 && !cellManager.isFill(x, y, 2)) {
+                            if (cellManager.setBoat(currentCell,2) ) {
+                                lblNumberBoat2Size.setText(Integer.toString(numberBoats2 -1));
+                            }
+                        } 
                     }
                     case "btnAddBoat1Size" -> {
                         int numberBoats1 = CellManager.getMyCellManager().getBoatAvaliable1();
-                        if (numberBoats1 > 0 && !CellManager.getMyCellManager().isFill(x,y)) {
-                            lblNumberBoat1Size.setText(Integer.toString(numberBoats1 -1 ));
-                        }
+                        if (numberBoats1 > 0 && !cellManager.isFill(x, y,1)) {
+                            if (cellManager.setBoat(currentCell,1)) {
+                                lblNumberBoat1Size.setText(Integer.toString(numberBoats1 -1));
+                            }
+                        } 
                     }
                     default -> throw new AssertionError();
                 }

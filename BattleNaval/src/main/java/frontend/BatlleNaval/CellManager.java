@@ -8,7 +8,7 @@ import java.util.Observer;
 /**
  * @author novoa
  */
-public class CellManager implements Observer {
+public class CellManager  {
 
 
     private ArrayList<Cell> cellList;
@@ -36,10 +36,11 @@ public class CellManager implements Observer {
     }
 
 
-    public void setBoat(Cell currentPanel, int boatSize) {
+    public boolean setBoat(Cell currentPanel, int boatSize) {
         String[] coordenate = currentPanel.getPanel().getName().split(",");
         int x = Integer.parseInt(coordenate[0]);
         int y = Integer.parseInt(coordenate[1]);
+        boolean isAdded = false;
         if (y + (boatSize - 1) <= 10) {
             for (int i = 0; i < boatSize; i++) {
                 Cell cellPanel = search(x, y);
@@ -48,24 +49,27 @@ public class CellManager implements Observer {
                 cellPanel.getPanel().dispatchEvent(mouseEvent);
                 y++;
             }
+            isAdded = true;
+            switch (boatSize) {
+                case 4:
+                    boatAvaliable4--;
+                    break;
+                case 3:
+                    boatAvaliable3--;
+                    break;
+                case 2:
+                    boatAvaliable2--;
+                    break;
+                case 1:
+                    boatAvaliable1--;
+                    break;
+
+            }
         }
+        return isAdded;
     }
 
-    public void setBoatAvaliable4(int boatAvaliable4) {
-        this.boatAvaliable4 = boatAvaliable4;
-    }
 
-    public void setBoatAvaliable3(int boatAvaliable3) {
-        this.boatAvaliable3 = boatAvaliable3;
-    }
-
-    public void setBoatAvaliable2(int boatAvaliable2) {
-        this.boatAvaliable2 = boatAvaliable2;
-    }
-
-    public void setBoatAvaliable1(int boatAvaliable1) {
-        this.boatAvaliable1 = boatAvaliable1;
-    }
 
     public int getBoatAvaliable4() {
         return boatAvaliable4;
@@ -99,60 +103,27 @@ public class CellManager implements Observer {
     }
     
     
-    
-    public boolean isFill(int x, int y) {
-        String nameToFind = x + "," + y;
-       for (Cell currenCell : cellList) {
-            if (currenCell.getPanel().getName().equals(nameToFind)) {
-                return currenCell.isPermanent();
+    /**
+     * Verifica que el espacio donde se agrega el barco este totalmente libre
+     * Retorna true si algún espacio esta lleno y false si no
+     * @param x
+     * @param y
+     * @param boatSize
+     * @return 
+     */
+    public boolean isFill(int x, int y, int boatSize) {
+       String nameToFind = x + "," + y;
+        for (int i = 0; i < boatSize; i++) {
+             Cell cellPanel = search(x, y);
+             if (cellPanel.isPermanent()) {
+                return true;
             }
+             y++;
         }
         return false;
     }
 
-    @Override
-    public void update(Observable currentPanel, Object arg) {
-        try {
-            if (currentPanel instanceof Cell) {
-                System.out.println(this.generateMapBoats());
-                Cell currentCell = (Cell) currentPanel;
-                String[] coordenate = currentCell.getPanel().getName().split(",");
-                int x = Integer.parseInt(coordenate[0]);
-                int y = Integer.parseInt(coordenate[1]);
-                switch (Mouse.getMyMouse().getComponentClicked().getName()) {
-                    case "btnAddBoat4Size":
-                        if (boatAvaliable4 > 0 && !isFill(x,y)) {
-                            setBoat((Cell) currentPanel, 4);
-                            boatAvaliable4--;
-                        }
-                        break;
-                    case "btnAddBoat3Size":
-                        if (boatAvaliable3 > 0 && !isFill(x,y)) {
-                            setBoat((Cell) currentPanel, 3);
-                            boatAvaliable3--;
-                        }
-                        break;
-                    case "btnAddBoat2Size":
-                        if (boatAvaliable2 >0 && !isFill(x,y)) {
-                            setBoat((Cell) currentPanel, 2);
-                            boatAvaliable2--;
-                        }
-                        break;
-                    case "btnAddBoat1Size":
-                        if (boatAvaliable1>0 && !isFill(x,y)) {
-                            setBoat((Cell) currentPanel, 1);
-                            boatAvaliable1--;
-                        }
-                        break;
-                    default:
-                        throw new AssertionError();
-                }
 
-            }
-        } catch (Exception e) {
-
-        }
-    }
 
 
     /**
