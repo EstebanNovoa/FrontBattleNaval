@@ -18,7 +18,7 @@ public class Cell extends Observable {
     private Status status;
     private boolean permanent = false;
     private JPanel panel;
-
+    private boolean isOpponent;
 
     public Cell(String name, BoardManager boardManager, BoatTable boatTable) {
         super();
@@ -36,6 +36,15 @@ public class Cell extends Observable {
         setProperties(name);
     }
 
+    public void setIsOpponent(boolean isOpponent) {
+        this.isOpponent = isOpponent;
+    }
+
+    public boolean isIsOpponent() {
+        return isOpponent;
+    }
+
+    
 
     public Status isStatus() {
         return status;

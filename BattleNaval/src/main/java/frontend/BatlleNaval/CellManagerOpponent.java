@@ -102,7 +102,7 @@ public class CellManagerOpponent implements Observer {
         try {
             if (currentPanel instanceof Cell) {
                 System.out.println("El estado de la celda clickeada es: " + ((Cell) currentPanel).getStatus());
-                if (((Cell) currentPanel).getStatus().equals(Status.CB)) {
+                if (((Cell) currentPanel).getStatus().equals(Status.CB) && ((Cell) currentPanel).isIsOpponent() == true) {
                     ((Cell) currentPanel).getPanel().setBackground(Color.red);
                     ((Cell) currentPanel).setPermanent(true);
                 }

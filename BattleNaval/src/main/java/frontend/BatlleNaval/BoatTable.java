@@ -291,8 +291,8 @@ public class BoatTable extends JFrame implements Observer {
 
     public void fillUserBoardStart() {
         userBoard.setPreferredSize(new Dimension(350, 350));
-        for (int i = 0; i < BoardWidth; i++) {
-            for (int j = 0; j < BoardWidth; j++) {
+        for (int i = 1; i <= BoardWidth; i++) {
+            for (int j = 1; j <= BoardWidth; j++) {
                 Cell currentPanel = new Cell((i + "," + j), boardManager, this);
                 CellManager.getMyCellManager().getCellList().add(currentPanel);
                 userBoard.add(currentPanel.getPanel());
@@ -351,8 +351,8 @@ public class BoatTable extends JFrame implements Observer {
         String prueba = "";
         int global = 0;
         opponentBoard.setPreferredSize(new Dimension(350, 350));
-        for (int i = 0; i < BoardWidth; i++) {
-            for (int j = 0; j < BoardWidth; j++) {
+        for (int i = 1; i <= BoardWidth; i++) {
+            for (int j = 1; j <= BoardWidth; j++) {
                 Cell currentPanel = new Cell((j + 1) + "," + (i + 1), boardManager, this);
                 char currentSimbol = opponentMap.charAt((i + j));
                 prueba += currentSimbol;
@@ -361,6 +361,7 @@ public class BoatTable extends JFrame implements Observer {
                 } else {
                     currentPanel.setStatus(Status.CBS);
                 }
+                currentPanel.setIsOpponent(true);
                 global++;
                 CellManager.getMyCellManager().getCellList().add(currentPanel);
                 opponentBoard.add(currentPanel.getPanel());
