@@ -52,7 +52,8 @@ public class BoardManager implements Observer {
     @Override
     public void update(Observable o, Object arg) {
         if (o instanceof Cell) {
-            boatTable.fillMainBoardRepaint();
+            System.out.println("REPAINT NO NEEDED :)");
+            //boatTable.fillMainBoardRepaint();
         }
 
     }

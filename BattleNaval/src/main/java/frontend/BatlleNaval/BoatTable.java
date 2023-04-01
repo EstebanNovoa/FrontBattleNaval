@@ -291,9 +291,9 @@ public class BoatTable extends JFrame implements Observer {
 
     public void fillUserBoardStart() {
         userBoard.setPreferredSize(new Dimension(350, 350));
-        for (int i = 1; i <= BoardWidth; i++) {
-            for (int j = 1; j <= BoardWidth; j++) {
-                Cell currentPanel = new Cell((j + "," + i), boardManager, this);
+        for (int i = 0; i < BoardWidth; i++) {
+            for (int j = 0; j < BoardWidth; j++) {
+                Cell currentPanel = new Cell((i + "," + j), boardManager, this);
                 CellManager.getMyCellManager().getCellList().add(currentPanel);
                 userBoard.add(currentPanel.getPanel());
             }
@@ -323,7 +323,8 @@ public class BoatTable extends JFrame implements Observer {
         for (int i = 1; i <= BoardWidth; i++) {
             for (int j = 1; j <= BoardWidth; j++) {
                 Cell currentPanel = CellManager.getMyCellManager().search(i, j);
-                CellManager.getMyCellManager().getCellList().add(currentPanel);
+                //CellManager.getMyCellManager().getCellList().add(currentPanel);
+                System.out.println("List SIZE: " + CellManager.getMyCellManager().getCellList().size());
                 userBoard.add(currentPanel.getPanel());
             }
         }
