@@ -4,16 +4,17 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class ServerListener {
-    private TimerTask task;
+
+    private Timer timer;
     private Controller controller;
 
     public ServerListener(Controller controller) {
         this.controller = controller;
+        timer = new Timer();
     }
 
     public void start(){
-        createClockTask();
-        new Timer().scheduleAtFixedRate(task, 1000, 500);
+        timer.scheduleAtFixedRate(createClockTask(), 1000, 500);
     }
 
     /**
@@ -21,18 +22,19 @@ public class ServerListener {
      * @return
      */
     private TimerTask createClockTask() {
-        this.task = new TimerTask() {
+        return new TimerTask() {
             @Override
             public void run() {
-                while (!controller.getSocket().isClosed()) {
-                    String action = controller.getInputString();
-                    if (action != null) {
-                        System.out.println("HILO: " + Thread.currentThread().getName());
-                        controller.serverAction(action);
-                    }
+                if (controller.getSocket().isClosed()) {
+                    timer.cancel();
+                    return;
+                }
+                String action = controller.getInputString();
+                if (action != null) {
+                    //System.out.println("HILO: " + Thread.currentThread().getName());
+                    controller.serverAction(action);
                 }
             }
         };
-        return task;
     }
 }

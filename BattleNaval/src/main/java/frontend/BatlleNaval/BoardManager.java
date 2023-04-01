@@ -5,7 +5,6 @@ import java.awt.event.ActionEvent;
 import javax.swing.*;
 
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -34,12 +33,16 @@ public class BoardManager implements Observer {
     }
 
 
-    public void addBoardOpponent() {
-        this.boatTable.addBoardOpponent();
+    public void addBoardOpponent(String board) {
+        this.boatTable.fillBoardOpponent(board);
     }
 
     public void setTime(String time) {
         this.boatTable.setTime(time);
+    }
+
+    public void setOpponentName(String name){
+        this.boatTable.setOpponentName(name);
     }
 
     public JPanel getBoard() {
@@ -51,13 +54,7 @@ public class BoardManager implements Observer {
     }
 
     @Override
-    public void update(Observable o, Object arg) {
-        if (o instanceof Cell) {
-            System.out.println("REPAINT NO NEEDED :)");
-            //boatTable.fillMainBoardRepaint();
-        }
-
-    }
+    public void update(Observable o, Object arg) {}
 
     public static void main(String[] args) {
         new BoardManager(new ActionListener() {

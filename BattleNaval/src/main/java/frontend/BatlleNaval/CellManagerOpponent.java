@@ -37,42 +37,6 @@ public class CellManagerOpponent implements Observer {
     }
 
 
-
-    public void setBoatAvaliable4(int boatAvaliable4) {
-        this.boatAvaliable4 = boatAvaliable4;
-    }
-
-    public void setBoatAvaliable3(int boatAvaliable3) {
-        this.boatAvaliable3 = boatAvaliable3;
-    }
-
-    public void setBoatAvaliable2(int boatAvaliable2) {
-        this.boatAvaliable2 = boatAvaliable2;
-    }
-
-    public void setBoatAvaliable1(int boatAvaliable1) {
-        this.boatAvaliable1 = boatAvaliable1;
-    }
-
-    public int getBoatAvaliable4() {
-        return boatAvaliable4;
-    }
-
-    public int getBoatAvaliable3() {
-        return boatAvaliable3;
-    }
-
-    public int getBoatAvaliable2() {
-        return boatAvaliable2;
-    }
-
-    public int getBoatAvaliable1() {
-        return boatAvaliable1;
-    }
-
-
-
-
     public Cell search(int x, int y) {
         String nameToFind = x + "," + y;
         for (Cell currenCell : cellList) {
@@ -106,13 +70,12 @@ public class CellManagerOpponent implements Observer {
     @Override
     public void update(Observable currentPanel, Object arg) {
         try {
-            if (currentPanel instanceof Cell) {
-                Cell currentCell = (Cell) currentPanel;
-                if (currentCell.getStatus().equals(Status.CB) && currentCell.isIsOpponent() == true) {                    
+            if (currentPanel instanceof Cell currentCell) {
+                if (currentCell.getStatus().equals(Status.CB) && currentCell.isIsOpponent()) {
                     currentCell.getPanel().setBackground(Color.red);
                     currentCell.setPermanent(true);
                     currentCell.setStatus(Status.CBD);
-                }else if (currentCell.getStatus().equals(Status.CBS) && currentCell.isIsOpponent() == true) {
+                }else if (currentCell.getStatus().equals(Status.CBS) && currentCell.isIsOpponent()) {
                     currentCell.getPanel().setBackground(Color.YELLOW);
                     currentCell.setPermanent(true);
                     currentCell.setStatus(Status.CD);
@@ -122,18 +85,6 @@ public class CellManagerOpponent implements Observer {
             }
         } catch (Exception e) {
 
-        }
-    }
-    
-    /**
-     * Meotdo de prueba
-     */
-    public void fillMainBoardStart() {
-        for (int i = 1; i <= 10; i++) {
-            for (int j = 1; j <= 10; j++) {
-                Cell currentPanel = new Cell((j + "," + i));
-                cellList.add(currentPanel);
-            }
         }
     }
 

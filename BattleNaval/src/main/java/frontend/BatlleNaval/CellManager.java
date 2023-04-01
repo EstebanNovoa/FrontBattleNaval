@@ -41,13 +41,13 @@ public class CellManager  {
         int x = Integer.parseInt(coordenate[0]);
         int y = Integer.parseInt(coordenate[1]);
         boolean isAdded = false;
-        if (y + (boatSize - 1) <= 10) {
+        if (x + (boatSize - 1) <= 10) {
             for (int i = 0; i < boatSize; i++) {
                 Cell cellPanel = search(x, y);
                 cellPanel.setPermanent(true);
                 MouseEvent mouseEvent = new MouseEvent(cellPanel.getPanel(), MouseEvent.MOUSE_ENTERED, System.currentTimeMillis(), 0, 0, 0, 0, false);
                 cellPanel.getPanel().dispatchEvent(mouseEvent);
-                y++;
+                x++;
             }
             isAdded = true;
             switch (boatSize) {
@@ -118,7 +118,7 @@ public class CellManager  {
              if (cellPanel.isPermanent()) {
                 return true;
             }
-             y++;
+             x++;
         }
         return false;
     }
@@ -133,9 +133,9 @@ public class CellManager  {
      */
     public String generateMapBoats() {
         String map = "";
-        for (int i = 1; i <= 10; i++) {
-            for (int j = 1; j <= 10; j++) {
-                if (search(i, j).isPermanent()) {
+        for (int y = 1; y <= 10; y++) {
+            for (int x = 1; x <= 10; x++) {
+                if (search(x, y).isPermanent()) {
                     map += "-";
                 } else {
                     map += ".";

@@ -32,7 +32,6 @@ public class Controller extends WindowAdapter implements ActionListener {
 
     public Controller() {
         this.frameLogin = new FrameLogin(this, this, MyColors.generateRandomColor(new Color(212, 104, 104)));
-
     }
 
     @Override
@@ -52,10 +51,6 @@ public class Controller extends WindowAdapter implements ActionListener {
             }
             default -> System.out.println("Default");
         }
-    }
-
-    private void searchMatch() {
-        this.boardManager.addBoardOpponent();
     }
 
     private void playGame() {
@@ -88,9 +83,13 @@ public class Controller extends WindowAdapter implements ActionListener {
         isWaiting = false;
         if (getInputString().equals(Actions.START_MATCH)) {
             System.out.println("Empezando partida");
-            System.out.println("NOMBRE OPONENTE: " + getInputString());
-            System.out.println("TABLERO OPONENTE: " + getInputString());
-            System.out.println("TURNO: " + getInputString());
+            boardManager.setOpponentName(getInputString());
+            String board = getInputString();
+            System.out.println("TABLERO OPONENTE: " + board);
+            boardManager.addBoardOpponent(board);
+            String turn = getInputString();
+            System.out.println("TURNO: " + turn);
+            Cell.setIsBlocked(getInputString().equals(Actions.WAIT_TURN));
             listener.start();
             frameLogin.hideDialogWaitMatch();
         }
@@ -141,7 +140,7 @@ public class Controller extends WindowAdapter implements ActionListener {
     }
 
     public void serverAction(String action) {
-        System.out.println("SERVER ACTION: " + action);
+        //System.out.println("SERVER ACTION: " + action);
         switch (action) {
             case SET_TIME -> setTime(getInputString());
             default -> System.out.println("COMANDO DESCONOCIDO");
