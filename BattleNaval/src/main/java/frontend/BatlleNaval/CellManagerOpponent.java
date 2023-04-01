@@ -96,12 +96,17 @@ public class CellManagerOpponent implements Observer {
         }
         return false;
     }
+    
+    /**
+     * Evalua el click que se genere en el tablero del oponente
+     * @param currentPanel
+     * @param arg 
+     */
 
     @Override
     public void update(Observable currentPanel, Object arg) {
         try {
             if (currentPanel instanceof Cell) {
-                System.out.println("El estado de la celda clickeada es: " + ((Cell) currentPanel).getStatus());
                 if (((Cell) currentPanel).getStatus().equals(Status.CB) && ((Cell) currentPanel).isIsOpponent() == true) {
                     ((Cell) currentPanel).getPanel().setBackground(Color.red);
                     ((Cell) currentPanel).setPermanent(true);

@@ -79,33 +79,37 @@ public class Cell extends Observable {
         return status;
     }
 
-    
-
-
-    
-
     public void mouseActions(JPanel panel) {
         panel.addMouseListener(new MouseAdapter() {
-                                   @Override
-                                   public void mouseEntered(MouseEvent e) {
-                                       panel.setBackground(Color.BLUE);
-                                       setChanged();
-                                   }
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                if (isOpponent) {
+                    if (!permanent) {
+                        panel.setBackground(Color.BLUE);
+                        setChanged();
+                    }
+                }else{
+                    panel.setBackground(Color.BLUE);
+                    setChanged();                    
+                }
 
-                                   @Override
-                                   public void mouseExited(MouseEvent e) {
-                                       if (permanent == false) {
-                                           panel.setBackground(Color.LIGHT_GRAY);
-                                       }
 
-                                   }
+            }
 
-                                   @Override
-                                   public void mouseClicked(MouseEvent e) {
-                                       setChanged();
-                                       notifyObservers(Cell.this);
-                                   }
-                               }
+            @Override
+            public void mouseExited(MouseEvent e) {
+                if (permanent == false) {
+                    panel.setBackground(Color.LIGHT_GRAY);
+                }
+
+            }
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                setChanged();
+                notifyObservers(Cell.this);
+            }
+        }
         );
     }
 
@@ -117,6 +121,5 @@ public class Cell extends Observable {
     public JPanel getPanel() {
         return panel;
     }
-
 
 }
