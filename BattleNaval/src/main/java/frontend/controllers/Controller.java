@@ -88,8 +88,7 @@ public class Controller extends WindowAdapter implements ActionListener {
             System.out.println("TABLERO OPONENTE: " + board);
             boardManager.addBoardOpponent(board);
             String turn = getInputString();
-            System.out.println("TURNO: " + turn);
-            Cell.setIsBlocked(getInputString().equals(Actions.WAIT_TURN));
+            Cell.setIsBlocked(turn.equals(Actions.WAIT_TURN));
             listener.start();
             frameLogin.hideDialogWaitMatch();
         }
@@ -140,7 +139,7 @@ public class Controller extends WindowAdapter implements ActionListener {
     }
 
     public void serverAction(String action) {
-        //System.out.println("SERVER ACTION: " + action);
+        System.out.println("SERVER ACTION: " + action);
         switch (action) {
             case SET_TIME -> setTime(getInputString());
             default -> System.out.println("COMANDO DESCONOCIDO");
