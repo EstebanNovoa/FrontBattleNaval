@@ -165,7 +165,7 @@ public class Controller extends WindowAdapter implements ActionListener {
     }
 
     public void sendShoot(int x, int y){
-        Cell.setIsBlocked(true);//No permite más disparos
+        CellManagerOpponent.getMyCellManagerOpponent().setIsBlocked(true);//No permite más disparos
         writeUTF(Actions.SHOOT);
         System.out.println("DISPARA HACIA: " + (x-1) + "," + (y-1));
         writeUTF((x-1) + "," + (y-1));

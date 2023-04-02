@@ -19,7 +19,6 @@ public class Cell extends Observable {
     private boolean permanent = false;
     private JPanel panel;
     private boolean isOpponent;
-    private static boolean isBlocked = true;
 
     public Cell(String name, BoardManager boardManager, BoatTable boatTable) {
         super();
@@ -53,13 +52,7 @@ public class Cell extends Observable {
         return permanent;
     }
 
-    public static boolean isBlocked() {
-        return isBlocked;
-    }
 
-    public static void setIsBlocked(boolean isBlocked) {
-        Cell.isBlocked = isBlocked;
-    }
 
     private void setProperties(String name) {
         panel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
@@ -97,8 +90,8 @@ public class Cell extends Observable {
                 } else {
                     panel.setBackground(Color.BLUE);
                     setChanged();
-                }
 
+                }
 
             }
 
@@ -112,21 +105,13 @@ public class Cell extends Observable {
 
             @Override
             public void mouseClicked(MouseEvent e) {
-                if (isOpponent) {
-                    if (!isBlocked) {
-                        setChanged();
-                        notifyObservers(Cell.this);
-                    }
-                }else {
-                    if (isBlocked) {
-                        setChanged();
-                        notifyObservers(Cell.this);
-                    }
-                        
+                if ( isOpponent && !CellManagerOpponent.getMyCellManagerOpponent().getIsBlocked() || !isOpponent &&  !CellManager.getMyCellManager().getIsBlocked()) {
+                    setChanged();
+                    notifyObservers(Cell.this);
                 }
-                
             }
-        });
+        }
+        );
     }
 
     public void notiAll() {

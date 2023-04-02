@@ -19,6 +19,7 @@ public class CellManager  {
     private int boatAvaliable1  = 2;
     private BoardManager boardManager;
     private static CellManager myCellManager;
+    private boolean isBlocked;
 
     public CellManager() {
         cellList = new ArrayList<Cell>();
@@ -34,6 +35,15 @@ public class CellManager  {
     public ArrayList<Cell> getCellList() {
         return cellList;
     }
+
+    public boolean getIsBlocked() {
+        return isBlocked;
+    }
+
+    public void setIsBlocked(boolean isBlocked) {
+        this.isBlocked = isBlocked;
+    }
+    
 
 
     public boolean setBoat(Cell currentPanel, int boatSize) {

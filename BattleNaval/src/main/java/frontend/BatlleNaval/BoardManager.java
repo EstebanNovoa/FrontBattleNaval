@@ -38,7 +38,7 @@ public class BoardManager implements Observer {
     }
 
     public void updateViewOnTurn(boolean yourTurn){
-        Cell.setIsBlocked(!yourTurn);
+        CellManager.getMyCellManager().setIsBlocked(!yourTurn);
         boatTable.setArrowVisible(yourTurn, BoatTable.Arrow.LEFT);
         boatTable.setArrowVisible(!yourTurn, BoatTable.Arrow.RIGHT);
     }

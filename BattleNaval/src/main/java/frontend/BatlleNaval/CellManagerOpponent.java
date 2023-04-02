@@ -7,6 +7,7 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
+import javax.swing.JOptionPane;
 
 /**
  * @author novoa
@@ -20,8 +21,11 @@ public class CellManagerOpponent implements Observer {
     private int boatAvaliable3 = 3 ;
     private int boatAvaliable2 = 3 ;
     private int boatAvaliable1  = 2;
+    private int numberCellLeft = 29;
     private BoardManager boardManager;
     private static CellManagerOpponent myCellManager;
+    private boolean isBlocked;
+    private boolean winner;
 
     public CellManagerOpponent() {
         cellList = new ArrayList<Cell>();
@@ -42,6 +46,24 @@ public class CellManagerOpponent implements Observer {
         return cellList;
     }
 
+    public boolean getIsBlocked() {
+        return isBlocked;
+    }
+
+    public void setIsBlocked(boolean isBlocked) {
+        this.isBlocked = isBlocked;
+    }
+
+    public boolean isWinner() {
+        if (numberCellLeft == 0) {
+            CellManager.getMyCellManager().setIsBlocked(true);
+            CellManagerOpponent.getMyCellManagerOpponent().setIsBlocked(true);
+            JOptionPane.showMessageDialog(null, "¡Felicidades, ganaste!", "GANADOR", JOptionPane.INFORMATION_MESSAGE);
+            winner = true;
+        }
+        return winner;
+    }
+    
 
     public Cell search(int x, int y) {
         String nameToFind = x + "," + y;
@@ -80,6 +102,7 @@ public class CellManagerOpponent implements Observer {
                 if (currentCell.getStatus().equals(Status.CB)) {
                     currentCell.getPanel().setBackground(Color.red);
                     currentCell.setStatus(Status.CBD);
+                    numberCellLeft--;
                 }else if (currentCell.getStatus().equals(Status.CBS)) {
                     currentCell.getPanel().setBackground(Color.YELLOW);
                     currentCell.setStatus(Status.CD);
@@ -87,6 +110,7 @@ public class CellManagerOpponent implements Observer {
                 currentCell.setPermanent(true);
                 sendShoot(currentCell.getPanel().getName());
             }
+            isWinner();
         } catch (Exception e) {
 
         }
