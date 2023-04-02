@@ -12,6 +12,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.time.LocalDateTime;
 import java.util.concurrent.TimeUnit;
 
 import static frontend.BatlleNaval.Actions.*;
@@ -139,7 +140,7 @@ public class Controller extends WindowAdapter implements ActionListener {
         }
     }
     public void serverAction(String action) {
-        //System.out.println("SERVER ACTION: " + action);
+        if (!action.equals(SET_TIME)) System.out.println(LocalDateTime.now() + " SERVER ACTION: " + action);
         switch (action) {
             case SET_TIME -> setTime(getInputString());
             case TIME_OUT, CHANGE_TURN -> {
@@ -153,6 +154,11 @@ public class Controller extends WindowAdapter implements ActionListener {
                 Status newStatus = Status.getStatus(getInputString().charAt(0));
                 System.out.printf("Actualiza el estado de: %d,%d a %s",(x+1),(y+1),newStatus.getValue());
                 CellManager.getMyCellManager().search(x+1,y+1).setStatus(newStatus);
+            }
+            case OPPONENT_BOARD -> {
+                String coord = getInputString();
+                String value = getInputString();
+                System.out.println("Respuesta de disparo del servidor: " + coord + " = " + value);
             }
             default -> System.out.println("COMANDO DESCONOCIDO");
         }

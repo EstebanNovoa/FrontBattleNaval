@@ -11,6 +11,7 @@ public interface Actions {
     String END_MATH = "end_match";
 
     String YOUR_BOARD = "yourBoard";
+    String OPPONENT_BOARD = "opponentBoard";
 
     //SERVER ACTIONS
     String SET_TIME = "setTime";
