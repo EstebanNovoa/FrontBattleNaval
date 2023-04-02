@@ -14,7 +14,7 @@ public class ServerListener {
     }
 
     public void start(){
-        timer.scheduleAtFixedRate(createClockTask(), 1000, 500);
+        timer.scheduleAtFixedRate(createClockTask(), 1000, 250);
     }
 
     /**

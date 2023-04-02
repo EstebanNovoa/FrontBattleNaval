@@ -4,6 +4,9 @@
  */
 package frontend.BatlleNaval;
 
+import java.util.Arrays;
+import java.util.NoSuchElementException;
+
 /**
  * @author novoa
  */
@@ -21,5 +24,12 @@ public enum Status {
 
     public char getValue() {
         return this.value;
+    }
+
+    public static Status getStatus(char value){
+        for (Status status: Status.values()) {
+            if (status.value == value) return status;
+        }
+        throw new NoSuchElementException(String.valueOf(value));
     }
 }

@@ -3,6 +3,7 @@ package frontend.BatlleNaval;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.util.Objects;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -30,6 +31,9 @@ public class BoatTable extends JFrame implements Observer {
     private JLabel lblNumberBoat2Size;
     private JLabel lblNumberBoat3Size;
     private JLabel lblNumberBoat4Size;
+
+    private JLabel lblArrowRight;
+    private JLabel lblArrowLeft;
     private JPanel backgroundPanel;
     private JPanel panelSelectBoats;
     private JPanel userBoard;
@@ -55,6 +59,7 @@ public class BoatTable extends JFrame implements Observer {
         btnAddBoat1Size.setName("btnAddBoat1Size");
         cellManagerOponent = CellManagerOpponent.getMyCellManagerOpponent();
         fillBoardStart();
+        setArrowVisible(false, Arrow.BOTH);
     }
 
     public void setNamePlayer(String namePlayer) {
@@ -95,6 +100,8 @@ public class BoatTable extends JFrame implements Observer {
         lblNumberBoat1Size = new JLabel();
         labelRemainingBoats = new JLabel();
         labelAvailableBoats = new JLabel();
+        lblArrowRight = new JLabel();
+        lblArrowLeft = new JLabel();
         labelTime = new JLabel("Tiempo restante: ");
         labelTime.setFont(new Font("Segoe UI", Font.PLAIN, 18));
         textFieldTime = new JTextField();
@@ -112,6 +119,15 @@ public class BoatTable extends JFrame implements Observer {
         labelTextTittle.setText("Bienvenido a Batalla Naval: " + namePlayer);
         labelTextTittle.setBounds(10, 10, 400, 20);
 
+        ImageIcon imageIcon = new ImageIcon(Objects.requireNonNull(getClass().getResource(Constants.PATH_IMG_ARROW_LEFT)));
+        this.lblArrowLeft.setIcon(new ImageIcon(imageIcon.getImage().getScaledInstance(80, 50, Image.SCALE_DEFAULT)));
+        this.lblArrowLeft.setBounds(430,420,80,50);
+
+        imageIcon = new ImageIcon(Objects.requireNonNull(getClass().getResource(Constants.PATH_IMG_ARROW_RIGHT)));
+        this.lblArrowRight.setIcon(new ImageIcon(imageIcon.getImage().getScaledInstance(80, 50, Image.SCALE_DEFAULT)));
+        this.lblArrowRight.setBounds(570,420,80,50);
+
+        //this.labelImage.setIcon(new ImageIcon(imageIcon.getImage().getScaledInstance(250, 250, Image.SCALE_DEFAULT)));
         labelNameOpponent.setBounds(670, 10, 400, 25);
 
         backgroundPanel.add(labelTextTittle);
@@ -220,6 +236,8 @@ public class BoatTable extends JFrame implements Observer {
         backgroundPanel.add(panelSelectBoats);
         backgroundPanel.add(btnSearchMatch);
         backgroundPanel.add(opponentBoard);
+        backgroundPanel.add(lblArrowRight);
+        backgroundPanel.add(lblArrowLeft);
 
         GroupLayout layout = new GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -367,6 +385,10 @@ public class BoatTable extends JFrame implements Observer {
         }
     }
 
+    public void setBtnStartVisible(boolean visible){
+        btnStart.setVisible(visible);
+    }
+
     private JLabel getLblNumberBoatSize(int boatSize){
         JLabel label;
         switch (boatSize){
@@ -377,6 +399,19 @@ public class BoatTable extends JFrame implements Observer {
             default -> throw new IllegalArgumentException("No hay barcos de tamaño: " + boatSize);
         }
         return label;
+    }
+
+    public enum Arrow {RIGHT, LEFT, BOTH}
+
+    public void setArrowVisible(boolean visible, Arrow arrow){
+        switch (arrow){
+            case LEFT -> lblArrowLeft.setVisible(visible);
+            case RIGHT -> lblArrowRight.setVisible(visible);
+            case BOTH -> {
+                lblArrowRight.setVisible(visible);
+                lblArrowLeft.setVisible(visible);
+            }
+        }
     }
 
     public void setTime(String time) {

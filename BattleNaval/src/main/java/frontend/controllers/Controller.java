@@ -14,8 +14,7 @@ import java.io.IOException;
 import java.net.Socket;
 import java.util.concurrent.TimeUnit;
 
-import static frontend.BatlleNaval.Actions.SEARCH_MATCH;
-import static frontend.BatlleNaval.Actions.SET_TIME;
+import static frontend.BatlleNaval.Actions.*;
 
 public class Controller extends WindowAdapter implements ActionListener {
 
@@ -67,6 +66,7 @@ public class Controller extends WindowAdapter implements ActionListener {
                     System.out.println("CREANDO SOCKET");
                     input = new DataInputStream(socket.getInputStream());
                     output = new DataOutputStream(socket.getOutputStream());
+                    CellManagerOpponent.getMyCellManagerOpponent().setController(this);
                     listener = new ServerListener(this);
                 }
             } catch (IOException e) {
@@ -88,7 +88,8 @@ public class Controller extends WindowAdapter implements ActionListener {
             System.out.println("TABLERO OPONENTE: " + board);
             boardManager.addBoardOpponent(board);
             String turn = getInputString();
-            Cell.setIsBlocked(turn.equals(Actions.WAIT_TURN));
+            boardManager.updateViewOnTurn(turn.equals(YOUR_TURN));
+            boardManager.setBtnStartVisible(false);
             listener.start();
             frameLogin.hideDialogWaitMatch();
         }
@@ -137,13 +138,31 @@ public class Controller extends WindowAdapter implements ActionListener {
             Output.showErrorMessage(Texts.ERROR_NOT_WRITE);
         }
     }
-
     public void serverAction(String action) {
-        System.out.println("SERVER ACTION: " + action);
+        //System.out.println("SERVER ACTION: " + action);
         switch (action) {
             case SET_TIME -> setTime(getInputString());
+            case TIME_OUT, CHANGE_TURN -> {
+                boolean yourTurn = getInputString().equals(YOUR_TURN);
+                boardManager.updateViewOnTurn(yourTurn);
+            }
+            case YOUR_BOARD -> {
+                String[] coord = getInputString().split(",");
+                int x = Integer.parseInt(coord[0]);
+                int y = Integer.parseInt(coord[1]);
+                Status newStatus = Status.getStatus(getInputString().charAt(0));
+                System.out.printf("Actualiza el estado de: %d,%d a %s",(x+1),(y+1),newStatus.getValue());
+                CellManager.getMyCellManager().search(x+1,y+1).setStatus(newStatus);
+            }
             default -> System.out.println("COMANDO DESCONOCIDO");
         }
+    }
+
+    public void sendShoot(int x, int y){
+        Cell.setIsBlocked(true);//No permite más disparos
+        writeUTF(Actions.SHOOT);
+        System.out.println("DISPARA HACIA: " + (x-1) + "," + (y-1));
+        writeUTF((x-1) + "," + (y-1));
     }
 
     private void setTime(String time) {

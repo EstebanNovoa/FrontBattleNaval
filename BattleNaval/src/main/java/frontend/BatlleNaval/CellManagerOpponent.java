@@ -1,5 +1,7 @@
 package frontend.BatlleNaval;
 
+import frontend.controllers.Controller;
+
 import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -11,7 +13,7 @@ import java.util.Observer;
  */
 public class CellManagerOpponent implements Observer {
 
-
+    private Controller controller;
     private ArrayList<Cell> cellList;
 
     private int boatAvaliable4 = 3 ;
@@ -30,6 +32,10 @@ public class CellManagerOpponent implements Observer {
             myCellManager = new CellManagerOpponent();
         }
         return myCellManager;
+    }
+
+    public void setController(Controller controller) {
+        this.controller = controller;
     }
 
     public ArrayList<Cell> getCellList() {
@@ -70,22 +76,27 @@ public class CellManagerOpponent implements Observer {
     @Override
     public void update(Observable currentPanel, Object arg) {
         try {
-            if (currentPanel instanceof Cell currentCell) {
-                if (currentCell.getStatus().equals(Status.CB) && currentCell.isIsOpponent()) {
+            if (currentPanel instanceof Cell currentCell && currentCell.isIsOpponent()) {
+                if (currentCell.getStatus().equals(Status.CB)) {
                     currentCell.getPanel().setBackground(Color.red);
-                    currentCell.setPermanent(true);
                     currentCell.setStatus(Status.CBD);
-                }else if (currentCell.getStatus().equals(Status.CBS) && currentCell.isIsOpponent()) {
+                }else if (currentCell.getStatus().equals(Status.CBS)) {
                     currentCell.getPanel().setBackground(Color.YELLOW);
-                    currentCell.setPermanent(true);
                     currentCell.setStatus(Status.CD);
-                }else{
-                    
                 }
+                currentCell.setPermanent(true);
+                sendShoot(currentCell.getPanel().getName());
             }
         } catch (Exception e) {
 
         }
+    }
+
+    private void sendShoot(String cellName){
+        String[] coords = cellName.split(",");
+        int x = Integer.parseInt(coords[0]);
+        int y = Integer.parseInt(coords[1]);
+        controller.sendShoot(x,y);
     }
 
     /**

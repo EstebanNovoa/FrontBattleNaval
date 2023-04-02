@@ -37,6 +37,11 @@ public class BoardManager implements Observer {
         this.boatTable.fillBoardOpponent(board);
     }
 
+    public void updateViewOnTurn(boolean yourTurn){
+        Cell.setIsBlocked(!yourTurn);
+        boatTable.setArrowVisible(yourTurn, BoatTable.Arrow.LEFT);
+        boatTable.setArrowVisible(!yourTurn, BoatTable.Arrow.RIGHT);
+    }
     public void setTime(String time) {
         this.boatTable.setTime(time);
     }
@@ -51,6 +56,10 @@ public class BoardManager implements Observer {
 
     private void setNamePlayer(String namePlayer) {
         this.boatTable.setNamePlayer(namePlayer);
+    }
+
+    public void setBtnStartVisible(boolean visible){
+        boatTable.setBtnStartVisible(visible);
     }
 
     @Override
