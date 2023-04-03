@@ -119,12 +119,12 @@ public class BoatTable extends JFrame implements Observer {
         labelTextTittle.setText("Bienvenido a Batalla Naval: " + namePlayer);
         labelTextTittle.setBounds(10, 10, 400, 20);
 
-       // ImageIcon imageIcon = new ImageIcon(Objects.requireNonNull(getClass().getResource(Constants.PATH_IMG_ARROW_LEFT)));
-       // this.lblArrowLeft.setIcon(new ImageIcon(imageIcon.getImage().getScaledInstance(80, 50, Image.SCALE_DEFAULT)));
+        ImageIcon imageIcon = new ImageIcon(Objects.requireNonNull(getClass().getResource(Constants.PATH_IMG_ARROW_LEFT)));
+        this.lblArrowLeft.setIcon(new ImageIcon(imageIcon.getImage().getScaledInstance(80, 50, Image.SCALE_DEFAULT)));
         this.lblArrowLeft.setBounds(430,420,80,50);
 
-        //imageIcon = new ImageIcon(Objects.requireNonNull(getClass().getResource(Constants.PATH_IMG_ARROW_RIGHT)));
-        //this.lblArrowRight.setIcon(new ImageIcon(imageIcon.getImage().getScaledInstance(80, 50, Image.SCALE_DEFAULT)));
+       imageIcon = new ImageIcon(Objects.requireNonNull(getClass().getResource(Constants.PATH_IMG_ARROW_RIGHT)));
+       this.lblArrowRight.setIcon(new ImageIcon(imageIcon.getImage().getScaledInstance(80, 50, Image.SCALE_DEFAULT)));
         this.lblArrowRight.setBounds(570,420,80,50);
 
         //this.labelImage.setIcon(new ImageIcon(imageIcon.getImage().getScaledInstance(250, 250, Image.SCALE_DEFAULT)));
