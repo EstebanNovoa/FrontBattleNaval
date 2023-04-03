@@ -19,7 +19,7 @@ public class Cell extends Observable {
     private boolean permanent = false;
     private JPanel panel;
     private boolean isOpponent;
-    private static boolean isBlocked = true;
+    private static boolean isBlocked = false;
 
     public Cell(String name, BoardManager boardManager, BoatTable boatTable) {
         super();

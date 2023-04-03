@@ -7,6 +7,7 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
+import javax.swing.JOptionPane;
 
 /**
  * @author novoa
@@ -20,6 +21,8 @@ public class CellManagerOpponent implements Observer {
     private int boatAvaliable3 = 3 ;
     private int boatAvaliable2 = 3 ;
     private int boatAvaliable1  = 2;
+    private boolean winner;
+    private int numberCellLeft = 29;
     private BoardManager boardManager;
     private static CellManagerOpponent myCellManager;
 
@@ -42,6 +45,7 @@ public class CellManagerOpponent implements Observer {
         return cellList;
     }
 
+    
 
     public Cell search(int x, int y) {
         String nameToFind = x + "," + y;
@@ -55,7 +59,14 @@ public class CellManagerOpponent implements Observer {
     
     }
     
-    
+    public boolean isWinner(){
+        if ((boatAvaliable1 + boatAvaliable2 + boatAvaliable3 + boatAvaliable4) == 0) {
+            winner=true;
+            JOptionPane.showMessageDialog(null, "¡Felicidades, ganaste!", "GANADOR", JOptionPane.INFORMATION_MESSAGE);
+            Cell.setIsBlocked(true);
+        }
+        return winner;
+    }
     
     public boolean isFill(int x, int y) {
         String nameToFind = x + "," + y;
@@ -80,6 +91,7 @@ public class CellManagerOpponent implements Observer {
                 if (currentCell.getStatus().equals(Status.CB)) {
                     currentCell.getPanel().setBackground(Color.red);
                     currentCell.setStatus(Status.CBD);
+                    numberCellLeft--;
                 }else if (currentCell.getStatus().equals(Status.CBS)) {
                     currentCell.getPanel().setBackground(Color.YELLOW);
                     currentCell.setStatus(Status.CD);
@@ -87,6 +99,7 @@ public class CellManagerOpponent implements Observer {
                 currentCell.setPermanent(true);
                 sendShoot(currentCell.getPanel().getName());
             }
+            isWinner();
         } catch (Exception e) {
 
         }
