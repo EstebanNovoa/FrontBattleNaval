@@ -74,5 +74,8 @@ public class BoardManager implements Observer {
         });
     }
 
-    
+
+    public void dispose() {
+        boatTable.dispose();
+    }
 }

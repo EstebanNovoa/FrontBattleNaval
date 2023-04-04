@@ -8,7 +8,11 @@ public interface Actions {
     String WAIT_TURN ="waitTurn";
     String YOUR_TURN = "yourTurn";
     String CHANGE_TURN = "changeTurn";
-    String END_MATH = "end_match";
+    String END_MATH = "endMatch";
+    String EXIT = "exit";
+    String LOST = "lost";
+    String WON = "won";
+    String OPPONENT_IS_GONE = "opponentIsGone";
 
     String YOUR_BOARD = "yourBoard";
     String OPPONENT_BOARD = "opponentBoard";

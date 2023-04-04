@@ -13,10 +13,10 @@ public class CellManager  {
 
     private ArrayList<Cell> cellList;
 
-    private int boatAvaliable4 = 3 ;
-    private int boatAvaliable3 = 3 ;
-    private int boatAvaliable2 = 3 ;
-    private int boatAvaliable1  = 2;
+    private int boatAvaliable4 = 1 ;
+    private int boatAvaliable3 = 0 ;
+    private int boatAvaliable2 = 0 ;
+    private int boatAvaliable1  = 0;
     private BoardManager boardManager;
     private static CellManager myCellManager;
 

@@ -160,6 +160,7 @@ public class Controller extends WindowAdapter implements ActionListener {
                 String value = getInputString();
                 System.out.println("Respuesta de disparo del servidor: " + coord + " = " + value);
             }
+            case END_MATH -> endMatch();
             default -> System.out.println("COMANDO DESCONOCIDO");
         }
     }
@@ -177,5 +178,32 @@ public class Controller extends WindowAdapter implements ActionListener {
 
     public Socket getSocket() {
         return socket;
+    }
+
+    private void endMatch() {
+        String answerServer = getInputString();
+        switch (answerServer) {
+            case Actions.WON -> Output.showMessage("MESSAGE_WINNER");
+            case Actions.LOST -> Output.showMessage("MESSAGE_LOSER");
+            case Actions.OPPONENT_IS_GONE -> Output.showInfoMessage("MESSAGE_OPPONENT_LEAVE_MATCH");
+        }
+        Output.showMessage("Aqui se pueden mostrar los teclados :)");
+        this.exitMatch();
+    }
+
+    private void exitMatch() {
+        isWaiting = false;
+        if (socket.isConnected()) {
+            this.writeUTF(Actions.EXIT);
+            try {
+                socket.close();
+                frameLogin.setVisible(true);
+                boardManager.dispose();
+                //todo: we must to restart the board :)))) PUTO
+                //guiManager.clearTotalBoard();
+            } catch (IOException e) {
+                Output.showErrorMessage("ERROR_NOT_CLOSE_MATCH");
+            }
+        }
     }
 }

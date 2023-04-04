@@ -22,7 +22,6 @@ public class CellManagerOpponent implements Observer {
     private int boatAvaliable2 = 3 ;
     private int boatAvaliable1  = 2;
     private boolean winner;
-    private int numberCellLeft = 29;
     private BoardManager boardManager;
     private static CellManagerOpponent myCellManager;
 
@@ -91,13 +90,14 @@ public class CellManagerOpponent implements Observer {
                 if (currentCell.getStatus().equals(Status.CB)) {
                     currentCell.getPanel().setBackground(Color.red);
                     currentCell.setStatus(Status.CBD);
-                    numberCellLeft--;
                 }else if (currentCell.getStatus().equals(Status.CBS)) {
                     currentCell.getPanel().setBackground(Color.YELLOW);
                     currentCell.setStatus(Status.CD);
                 }
-                currentCell.setPermanent(true);
-                sendShoot(currentCell.getPanel().getName());
+                if (!currentCell.isPermanent()){
+                    currentCell.setPermanent(true);
+                    sendShoot(currentCell.getPanel().getName());
+                }
             }
             isWinner();
         } catch (Exception e) {
