@@ -25,6 +25,7 @@ public class Cell extends Observable {
         super();
         panel = new JPanel();
         this.addObserver(CellManagerOpponent.getMyCellManagerOpponent());
+        this.addObserver(CellManager.getMyCellManager());
         this.addObserver(boardManager);
         this.addObserver(boatTable);
         mouseActions(panel);

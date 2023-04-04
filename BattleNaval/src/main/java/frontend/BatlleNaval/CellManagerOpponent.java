@@ -17,10 +17,10 @@ public class CellManagerOpponent implements Observer {
     private Controller controller;
     private ArrayList<Cell> cellList;
 
-    private int boatAvaliable4 = 3 ;
-    private int boatAvaliable3 = 3 ;
-    private int boatAvaliable2 = 3 ;
-    private int boatAvaliable1  = 2;
+    private int boatAvaliable4 = 3;
+    private int boatAvaliable3 = 3;
+    private int boatAvaliable2 = 3;
+    private int boatAvaliable1 = 2;
     private boolean winner;
     private BoardManager boardManager;
     private static CellManagerOpponent myCellManager;
@@ -44,7 +44,6 @@ public class CellManagerOpponent implements Observer {
         return cellList;
     }
 
-    
 
     public Cell search(int x, int y) {
         String nameToFind = x + "," + y;
@@ -55,61 +54,57 @@ public class CellManagerOpponent implements Observer {
         }
         System.out.println("Cooordenada que devuelve null es: " + x + " - " + y);
         return null;
-    
+
     }
-    
-    public boolean isWinner(){
+
+    public boolean isWinner() {
         if ((boatAvaliable1 + boatAvaliable2 + boatAvaliable3 + boatAvaliable4) == 0) {
-            winner=true;
+            winner = true;
             JOptionPane.showMessageDialog(null, "¡Felicidades, ganaste!", "GANADOR", JOptionPane.INFORMATION_MESSAGE);
             Cell.setIsBlocked(true);
         }
         return winner;
     }
-    
+
     public boolean isFill(int x, int y) {
         String nameToFind = x + "," + y;
-       for (Cell currenCell : cellList) {
+        for (Cell currenCell : cellList) {
             if (currenCell.getPanel().getName().equals(nameToFind)) {
                 return currenCell.isPermanent();
             }
         }
         return false;
     }
-    
+
     /**
      * Evalua el click que se genere en el tablero del oponente
+     *
      * @param currentPanel
-     * @param arg 
+     * @param arg
      */
 
     @Override
     public void update(Observable currentPanel, Object arg) {
-        try {
-            if (currentPanel instanceof Cell currentCell && currentCell.isIsOpponent()) {
-                if (currentCell.getStatus().equals(Status.CB)) {
-                    currentCell.getPanel().setBackground(Color.red);
-                    currentCell.setStatus(Status.CBD);
-                }else if (currentCell.getStatus().equals(Status.CBS)) {
-                    currentCell.getPanel().setBackground(Color.YELLOW);
-                    currentCell.setStatus(Status.CD);
-                }
-                if (!currentCell.isPermanent()){
-                    currentCell.setPermanent(true);
-                    sendShoot(currentCell.getPanel().getName());
-                }
+        if (currentPanel instanceof Cell currentCell && currentCell.isIsOpponent()) {
+            if (currentCell.getStatus().equals(Status.CB)) {
+                currentCell.getPanel().setBackground(Color.red);
+                currentCell.setStatus(Status.CBD);
+            } else if (currentCell.getStatus().equals(Status.CBS)) {
+                currentCell.getPanel().setBackground(Color.YELLOW);
+                currentCell.setStatus(Status.CD);
             }
-            isWinner();
-        } catch (Exception e) {
-
+            if (!currentCell.isPermanent()) {
+                currentCell.setPermanent(true);
+                sendShoot(currentCell.getPanel().getName());
+            }
         }
     }
 
-    private void sendShoot(String cellName){
+    private void sendShoot(String cellName) {
         String[] coords = cellName.split(",");
         int x = Integer.parseInt(coords[0]);
         int y = Integer.parseInt(coords[1]);
-        controller.sendShoot(x,y);
+        controller.sendShoot(x, y);
     }
 
     /**
@@ -124,14 +119,14 @@ public class CellManagerOpponent implements Observer {
                 Cell currentCell = this.search(i, j);
                 if (currentCell.getStatus().equals(Status.CB)) {
                     map += Status.CB.getValue();
-                }else if (currentCell.getStatus().equals(Status.CBD)) {
+                } else if (currentCell.getStatus().equals(Status.CBD)) {
                     map += Status.CBD.getValue();
-                }else if (currentCell.getStatus().equals(Status.CBS)) {
+                } else if (currentCell.getStatus().equals(Status.CBS)) {
                     map += Status.CBS.getValue();
-                }else if (currentCell.getStatus().equals(Status.CD)) {
+                } else if (currentCell.getStatus().equals(Status.CD)) {
                     map += Status.CD.getValue();
                 }
-              //  System.out.println("Coordenada: " + i + " , " + j + " \nSe agrego, posicion actual: " + map.length());
+                //  System.out.println("Coordenada: " + i + " , " + j + " \nSe agrego, posicion actual: " + map.length());
             }
         }
         return map;

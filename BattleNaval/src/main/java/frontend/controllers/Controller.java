@@ -152,8 +152,10 @@ public class Controller extends WindowAdapter implements ActionListener {
                 int x = Integer.parseInt(coord[0]);
                 int y = Integer.parseInt(coord[1]);
                 Status newStatus = Status.getStatus(getInputString().charAt(0));
-                System.out.printf("Actualiza el estado de: %d,%d a %s",(x+1),(y+1),newStatus.getValue());
-                CellManager.getMyCellManager().search(x+1,y+1).setStatus(newStatus);
+                System.out.printf("Actualiza el estado de: %d,%d a %s\n",(x+1),(y+1),newStatus.getValue());
+                Cell cell = CellManager.getMyCellManager().search(x+1,y+1);
+                cell.setStatus(newStatus);
+                cell.notiAll();
             }
             case OPPONENT_BOARD -> {
                 String coord = getInputString();

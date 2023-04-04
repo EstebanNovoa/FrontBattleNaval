@@ -1,5 +1,6 @@
 package frontend.BatlleNaval;
 
+import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Observable;
@@ -8,15 +9,15 @@ import java.util.Observer;
 /**
  * @author novoa
  */
-public class CellManager  {
+public class CellManager implements Observer {
 
 
     private ArrayList<Cell> cellList;
 
-    private int boatAvaliable4 = 1 ;
-    private int boatAvaliable3 = 0 ;
-    private int boatAvaliable2 = 0 ;
-    private int boatAvaliable1  = 0;
+    private int boatAvaliable4 = 1;
+    private int boatAvaliable3 = 0;
+    private int boatAvaliable2 = 0;
+    private int boatAvaliable1 = 0;
     private BoardManager boardManager;
     private static CellManager myCellManager;
 
@@ -70,7 +71,6 @@ public class CellManager  {
     }
 
 
-
     public int getBoatAvaliable4() {
         return boatAvaliable4;
     }
@@ -88,8 +88,6 @@ public class CellManager  {
     }
 
 
-
-
     public Cell search(int x, int y) {
         String nameToFind = x + "," + y;
         for (Cell currenCell : cellList) {
@@ -99,31 +97,30 @@ public class CellManager  {
         }
         System.out.println("Cooordenada que devuelve null es: " + x + " - " + y);
         return null;
-    
+
     }
-    
-    
+
+
     /**
      * Verifica que el espacio donde se agrega el barco este totalmente libre
      * Retorna true si algún espacio esta lleno y false si no
+     *
      * @param x
      * @param y
      * @param boatSize
-     * @return 
+     * @return
      */
     public boolean isFill(int x, int y, int boatSize) {
-       String nameToFind = x + "," + y;
+        String nameToFind = x + "," + y;
         for (int i = 0; i < boatSize; i++) {
-             Cell cellPanel = search(x, y);
-             if (cellPanel.isPermanent()) {
+            Cell cellPanel = search(x, y);
+            if (cellPanel.isPermanent()) {
                 return true;
             }
-             x++;
+            x++;
         }
         return false;
     }
-
-
 
 
     /**
@@ -147,12 +144,13 @@ public class CellManager  {
 
     /**
      * Obtiene la cantidad de barcos restantes dependiendo del tamaño especificado
+     *
      * @param boatSize tamaño del barco a buscar
      * @return barcos restantes
      */
-    public int getBoatsAvailable(int boatSize){
+    public int getBoatsAvailable(int boatSize) {
         int number;
-        switch (boatSize){
+        switch (boatSize) {
             case 1 -> number = getBoatAvaliable1();
             case 2 -> number = getBoatAvaliable2();
             case 3 -> number = getBoatAvaliable3();
@@ -164,9 +162,29 @@ public class CellManager  {
 
     /**
      * Obtiene la cantidad total de barcos disponibles
+     *
      * @return barcos disponibles
      */
-    public int getBoatsAvailable(){
+    public int getBoatsAvailable() {
         return boatAvaliable1 + boatAvaliable2 + boatAvaliable3 + boatAvaliable4;
+    }
+
+    /**
+     * Evalua el click que se genere en el tablero del oponente
+     *
+     * @param currentPanel
+     * @param arg
+     */
+
+    @Override
+    public void update(Observable currentPanel, Object arg) {
+        if (currentPanel instanceof Cell currentCell && !currentCell.isIsOpponent()) {
+            switch (currentCell.getStatus()) {
+                case CB -> currentCell.getPanel().setBackground(Color.BLUE);
+                case CBS -> currentCell.getPanel().setBackground(Color.GRAY);
+                case CD -> currentCell.getPanel().setBackground(Color.YELLOW);
+                case CBD -> currentCell.getPanel().setBackground(Color.RED);
+            }
+        }
     }
 }
