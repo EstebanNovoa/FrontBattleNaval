@@ -256,7 +256,9 @@ public class BoatTable extends JFrame implements Observer {
 
 
     public void fillBoardStart() {
+        userBoard.removeAll();
         userBoard.setPreferredSize(new Dimension(350, 350));
+        userBoard.removeAll();
         opponentBoard.setPreferredSize(new Dimension(350, 350));
         for (int y = 1; y <= BoardWidth; y++) {
             for (int x = 1; x <= BoardWidth; x++) {

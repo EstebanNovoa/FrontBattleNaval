@@ -25,7 +25,6 @@ public class Cell extends Observable {
         super();
         panel = new JPanel();
         this.addObserver(CellManagerOpponent.getMyCellManagerOpponent());
-        this.addObserver(CellManager.getMyCellManager());
         this.addObserver(boardManager);
         this.addObserver(boatTable);
         mouseActions(panel);
@@ -99,8 +98,6 @@ public class Cell extends Observable {
                     panel.setBackground(Color.BLUE);
                     setChanged();
                 }
-
-
             }
 
             @Override
@@ -128,6 +125,19 @@ public class Cell extends Observable {
                 
             }
         });
+    }
+
+    public void updateOnShoot(Status newStatus){
+        if (this.isOpponent) return;
+        System.out.printf("NEW STATUS = %s = %s\n",newStatus,newStatus.getValue());
+        this.setStatus(newStatus);
+        switch (status) {
+                case CB -> panel.setBackground(Color.BLUE);
+                case CBS -> panel.setBackground(Color.GRAY);
+                case CD -> panel.setBackground(Color.YELLOW);
+                case CBD -> panel.setBackground(Color.RED);
+        }
+        this.setPermanent(true);
     }
 
     public void notiAll() {

@@ -78,4 +78,10 @@ public class BoardManager implements Observer {
     public void dispose() {
         boatTable.dispose();
     }
+
+    public void resetValues() {
+        CellManager.getMyCellManager().resetValues();
+        boatTable.fillBoardStart();
+        Cell.setIsBlocked(true);
+    }
 }

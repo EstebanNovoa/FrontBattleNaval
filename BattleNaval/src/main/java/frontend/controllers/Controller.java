@@ -154,8 +154,7 @@ public class Controller extends WindowAdapter implements ActionListener {
                 Status newStatus = Status.getStatus(getInputString().charAt(0));
                 System.out.printf("Actualiza el estado de: %d,%d a %s\n",(x+1),(y+1),newStatus.getValue());
                 Cell cell = CellManager.getMyCellManager().search(x+1,y+1);
-                cell.setStatus(newStatus);
-                cell.notiAll();
+                cell.updateOnShoot(newStatus);
             }
             case OPPONENT_BOARD -> {
                 String coord = getInputString();
@@ -185,11 +184,12 @@ public class Controller extends WindowAdapter implements ActionListener {
     private void endMatch() {
         String answerServer = getInputString();
         switch (answerServer) {
-            case Actions.WON -> Output.showMessage("MESSAGE_WINNER");
-            case Actions.LOST -> Output.showMessage("MESSAGE_LOSER");
+            case Actions.WON -> Output.showMessage(Texts.MESSAGE_WINNER);
+            case Actions.LOST -> Output.showMessage(Texts.MESSAGE_LOSER);
             case Actions.OPPONENT_IS_GONE -> Output.showInfoMessage("MESSAGE_OPPONENT_LEAVE_MATCH");
         }
-        Output.showMessage("Aqui se pueden mostrar los teclados :)");
+        // TODO: 03/04/2023 Mostrar los tableros al terminar 
+        //Output.showMessage("Aqui se pueden mostrar los Tableros :)");
         this.exitMatch();
     }
 
@@ -201,8 +201,7 @@ public class Controller extends WindowAdapter implements ActionListener {
                 socket.close();
                 frameLogin.setVisible(true);
                 boardManager.dispose();
-                //todo: we must to restart the board :)))) PUTO
-                //guiManager.clearTotalBoard();
+                boardManager = null;
             } catch (IOException e) {
                 Output.showErrorMessage("ERROR_NOT_CLOSE_MATCH");
             }
